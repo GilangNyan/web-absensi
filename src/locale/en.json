@@ -1,0 +1,108 @@
+{
+  "appName": "Attendance Information System",
+  "login": "Login",
+  "register": "Register",
+  "forgotPassword": "Forgot Password",
+  "requestSent": "Request Sent",
+  "resetPassword": "Reset Password",
+  "showing": "Showing",
+  "paginationCount": "Entry {first} to {last} from {total} entry",
+  "view": "View",
+  "update": "Update",
+  "delete": "Delete",
+  "lang": {
+    "id": "Indonesia",
+    "en": "English"
+  },
+  "label": {
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "username": "Username",
+    "password": "Password",
+    "remember": "Remember me",
+    "forgotPassword": "Forgot password?",
+    "confirmPassword": "Confirm Password",
+    "email": "Email",
+    "submit": "Submit",
+    "backToLogin": "Back to Login Page",
+    "noAccountRegister": "Didn't have an account? Register",
+    "processing": "Processing...",
+    "search": "Search...",
+    "noData": "No data available in this table",
+    "add": "Add",
+    "sync": "Synchronize",
+    "upload": "Upload",
+    "dropFile": "Drag and drop files here",
+    "browse": "Browse Files",
+    "or": "or",
+    "validate": "Validate",
+    "done": "Done",
+    "back": "Back",
+    "next": "Next",
+    "verify": "Verify",
+    "name": "Name",
+    "date": "Date",
+    "description": "Description",
+    "save": "Save",
+    "delete": "Delete",
+    "takeAttendance": "Take Attendance",
+    "adminDashboard": "Admin Dashboard",
+    "logout": "Logout",
+    "language": "Language",
+    "account": "Account",
+    "notifications": "Notifications",
+    "groupMembers": "Group Members"
+  },
+  "description": {
+    "forgotPassword": "Enter your registered email and we'll send you a link to reset your password.",
+    "passwordResetRequestSent": "Password reset request link has been sent to your registered email address. Click the link and follow the given instructions.",
+    "actionsConfirmation": "Are you sure you want to {actions} this data?"
+  },
+  "validation": {
+    "required": "{field} is required",
+    "columnNotFound": "Column {column} is not found",
+    "allValid": "All submitted data is valid"
+  },
+  "title": {
+    "studentsData": "Students Data",
+    "lecturersData": "Lecturers Data",
+    "gradesData": "Grades Data",
+    "holidaysData": "Holidays Data",
+    "menuMaintenance": "Menu Maintenance",
+    "submenuMaintenance": "Submenu Maintenance"
+  },
+  "tableHead": {
+    "name": "Name",
+    "date": "Date",
+    "description": "Description",
+    "actions": "Actions",
+    "nisn": "National Students ID",
+    "nipd": "Students ID",
+    "fullname": "Full Name",
+    "gender": "Gender",
+    "birthPlace": "Birth Place",
+    "birthDate": "Birth Date",
+    "grade": "Grades",
+    "status": "Status",
+    "level": "Level",
+    "menu": "Menu",
+    "submenu": "Submenu"
+  },
+  "success": {
+    "success": "Success",
+    "login": "Login Success",
+    "logout": "Logout Success",
+    "save": "Success saving data with name {name}",
+    "delete": "Success deleting data with name {name}"
+  },
+  "warning": {
+    "warning": "Warning",
+    "sessionExpired": "Session Expired",
+    "fileExist": "File already exist"
+  },
+  "error": {
+    "error": "Error"
+  },
+  "active": "Active",
+  "inactive": "Inactive"
+}

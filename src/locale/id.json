@@ -1,0 +1,108 @@
+{
+  "appName": "Sistem Informasi Presensi",
+  "login": "Masuk",
+  "register": "Daftar",
+  "forgotPassword": "Lupa Kata Sandi",
+  "requestSent": "Permintaan Dikirim",
+  "resetPassword": "Atur Ulang Kata Sandi",
+  "showing": "Menampilkan",
+  "paginationCount": "Entri {first} sampai {last} dari {total} entri",
+  "view": "Lihat",
+  "update": "Ubah",
+  "delete": "Hapus",
+  "lang": {
+    "id": "Indonesia",
+    "en": "English"
+  },
+  "label": {
+    "cancel": "Batal",
+    "confirm": "Konfirmasi",
+    "username": "Nama Pengguna",
+    "password": "Kata Sandi",
+    "remember": "Ingat saya",
+    "confirmPassword": "Konfirmasi Kata Sandi",
+    "forgotPassword": "Lupa kata sandi?",
+    "email": "Email",
+    "submit": "Kirim",
+    "backToLogin": "Kembali ke halaman Login",
+    "noAccountRegister": "Belum punya akun? Daftar",
+    "processing": "Memroses...",
+    "search": "Cari...",
+    "noData": "Tidak ada data dalam tabel ini",
+    "add": "Tambah Data",
+    "sync": "Sinkronisasi",
+    "upload": "Unggah",
+    "dropFile": "Seret dan jatuhkan berkas di sini",
+    "browse": "Cari Berkas",
+    "or": "atau",
+    "validate": "Validasi",
+    "done": "Selesai",
+    "back": "Kembali",
+    "next": "Selanjutnya",
+    "verify": "Verifikasi",
+    "name": "Nama",
+    "date": "Tanggal",
+    "description": "Deskripsi",
+    "save": "Simpan",
+    "delete": "Hapus",
+    "takeAttendance": "Lakukan Absensi",
+    "adminDashboard": "Dashboard Admin",
+    "logout": "Logout",
+    "language": "Bahasa",
+    "account": "Akun",
+    "notifications": "Notifikasi",
+    "groupMembers": "Anggota Rombel"
+  },
+  "description": {
+    "forgotPassword": "Masukkan alamat email terdaftar Anda dan kami akan mengirimkan tautan untuk mengubah kata sandi Anda.",
+    "passwordResetRequestSent": "Tautan untuk permintaan mengatur ulang kata sandi telah dikirim ke alamat email terdaftar. Klik tautan dan ikuti arahan yang diberikan.",
+    "actionsConfirmation": "Apakah Anda yakin akan {actions} data ini?"
+  },
+  "validation": {
+    "required": "{field} harus diisi",
+    "columnNotFound": "Kolom {column} tidak ditemukan",
+    "allValid": "Semua data yang dikirimkan sudah benar"
+  },
+  "title": {
+    "studentsData": "Data Siswa",
+    "lecturersData": "Data Guru",
+    "gradesData": "Data Kelas",
+    "holidaysData": "Data Hari Libur",
+    "menuMaintenance": "Kelola Menu",
+    "submenuMaintenance": "Kelola Submenu"
+  },
+  "tableHead": {
+    "name": "Nama",
+    "date": "Tanggal",
+    "description": "Deskripsi",
+    "actions": "Aksi",
+    "nisn": "NISN",
+    "nipd": "NIPD",
+    "fullname": "Nama Lengkap",
+    "gender": "Jenis Kelamin",
+    "birthPlace": "Tempat Lahir",
+    "birthDate": "Tanggal Lahir",
+    "grade": "Kelas",
+    "status": "Status",
+    "level": "Level",
+    "menu": "Menu",
+    "submenu": "Submenu"
+  },
+  "success": {
+    "success": "Sukses",
+    "login": "Sukses Login",
+    "logout": "Sukses Logout",
+    "save": "Sukses menyimpan data dengan nama {name}",
+    "delete": "Sukses menghapus data dengan nama {name}"
+  },
+  "warning": {
+    "warning": "Peringatan",
+    "sessionExpired": "Sesi Telah Kadaluarsa",
+    "fileExist": "Berkas sudah ada"
+  },
+  "error": {
+    "error": "Kesalahan"
+  },
+  "active": "Aktif",
+  "inactive": "Nonaktif"
+}
