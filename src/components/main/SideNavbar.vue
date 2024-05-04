@@ -7,11 +7,12 @@
         v-show="props.sidebarOpen"
       >
         <div class="flex items-center justify-center p-4 font-extrabold">
+          <span class="bg-orange-500 text-white text-3xl px-2.5 py-0.5 mr-2 rounded-lg">E</span>
           <h1 class="text-white flex flex-col">
             <span class="text-xl">
-              <span class="bg-orange-500 px-2.5 py-0.5 mr-2 rounded-lg">E</span>Absensi
+              Absensi
             </span>
-            <span class="text-xs ml-10 font-semibold">SMAN 1 Beber</span>
+            <span class="text-xs font-semibold">SMAN 1 Beber</span>
           </h1>
         </div>
         <!-- <hr> -->
