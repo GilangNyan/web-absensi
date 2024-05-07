@@ -14,6 +14,7 @@
       </button>
       <button
         class="bg-blue-500 px-4 py-2 text-white rounded w-1/2"
+        @click.prevent="modalStore.confirmAction"
       >
         {{ $t('label.confirm') }}
       </button>

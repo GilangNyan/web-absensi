@@ -51,7 +51,8 @@
     "language": "Language",
     "account": "Account",
     "notifications": "Notifications",
-    "groupMembers": "Group Members"
+    "groupMembers": "Group Members",
+    "gradeName": "Grade Name"
   },
   "description": {
     "forgotPassword": "Enter your registered email and we'll send you a link to reset your password.",

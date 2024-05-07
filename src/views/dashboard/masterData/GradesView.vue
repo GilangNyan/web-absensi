@@ -5,7 +5,7 @@
   </div>
   <TableCustom :columns="columns" :rows="rows" @search="search($event)">
     <template #right-panel>
-      <ButtonRoundedWithIcon color="indigo" :label="$t('label.add')">
+      <ButtonRoundedWithIcon color="indigo" :label="$t('label.add')" @click="triggerGradeFormModal('I')">
         <PlusIcon class="w-4 h-4" />
       </ButtonRoundedWithIcon>
     </template>
@@ -32,7 +32,7 @@
 <script setup lang="ts">
 import TableCustom from '@/components/main/TableCustom.vue';
 import TablePagination from '@/components/main/TablePagination.vue';
-import { ref, onMounted, type Ref } from 'vue';
+import { ref, onMounted, type Ref, computed, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { PlusIcon } from '@heroicons/vue/24/solid';
 import BreadCrumbs from '@/components/main/BreadCrumbs.vue';
@@ -44,9 +44,15 @@ import ButtonDropdownActions from '@/components/buttons/ButtonDropdownActions.vu
 import { useModalStore } from '@/stores/modal';
 import type IDropdownItem from '@/types/dropdownItem';
 import RegisterStudentGradeModal from '@/components/modals/RegisterStudentGradeModal.vue';
+import GradeFormModal from '@/components/modals/forms/GradeFormModal.vue';
+import { useDataStore } from '@/stores/data';
+import type TCrudStatus from '@/types/status';
+import { useToasterStore } from '@/stores/toaster';
 
 const lang = useI18n()
 const modalStore = useModalStore()
+const dataStore = useDataStore()
+const toastStore = useToasterStore()
 
 const columns: Ref = ref([
   {
@@ -69,11 +75,27 @@ let totalItems: Ref<number> = ref(0)
 let totalPages: Ref<number> = ref(0)
 let searchData: Ref<string> = ref('')
 
+let selectedData: Ref<any> = ref({})
+
 const customOptions: Ref<IDropdownItem[]> = ref([{
   name: 'member',
   title: lang.t('label.groupMembers'),
   icon: 'UserGroupIcon'
 }])
+
+const isModalStateConfirmed = computed(() => {
+  return modalStore.isConfirmed
+})
+
+watch(isModalStateConfirmed, () => {
+  if (modalStore.isConfirmed) {
+    if (dataStore.status == 'I' || dataStore.status == 'U') {
+      getData()
+    } else if (dataStore.status == 'D') {
+      deleteData()
+    }
+  }
+})
 
 const getData = async (): Promise<void> => {
   let req = {
@@ -83,7 +105,7 @@ const getData = async (): Promise<void> => {
   }
   rows.value = []
   datas.value = []
-  gradeServices.getGradeGroup(req).then((result: AxiosResponse) => {
+  gradeServices.getGrades(req).then((result: AxiosResponse) => {
     datas.value = result.data.data
     totalItems.value = datas.value.totalItems
     totalPages.value = datas.value.totalPages
@@ -118,7 +140,11 @@ const search = (event: string): void => {
 }
 
 const handleClickActions = (event: string, value: any): void => {
+  if (event === 'update') {
+    triggerGradeFormModal('U', value)
+  }
   if (event === 'delete') {
+    dataStore.setStatus('D')
     confirmationDelete(value)
   }
   if (event === 'member') {
@@ -130,8 +156,27 @@ const registerStudentGrade = (data: any): void => {
   modalStore.openModal({ component: RegisterStudentGradeModal, props: data })
 }
 
+const triggerGradeFormModal = (actions: TCrudStatus, data?: any): void => {
+  dataStore.setStatus(actions)
+  modalStore.openModal({ component: GradeFormModal, props: data })
+}
+
 const confirmationDelete = (data: any): void => {
+  selectedData.value = data
   modalStore.openConfirmationModal(lang.t('label.confirm'), lang.t('description.actionsConfirmation', { actions: lang.t('label.delete').toLowerCase() }))
+}
+
+const deleteData = async (): Promise<void> => {
+  const payload = {
+    id: selectedData.value.id
+  }
+  await gradeServices.saveGrades(payload)!.then((result: AxiosResponse) => {
+    toastStore.success({ text: lang.t('success.success'), message: lang.t('success.save', { name: result.data.data.name })})
+    getData()
+  }).catch((error: any) => {
+    handleErrorResponse(error)
+    console.log(error)
+  })
 }
 
 onMounted(() => {

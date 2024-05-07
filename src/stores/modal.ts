@@ -14,13 +14,15 @@ interface IModalProps {
 
 interface IModalState {
   modalState: IModalProps
+  isConfirmed: boolean
 }
 
 export const useModalStore = defineStore('modal', {
-  state: (): IModalState => ({ modalState: basicState }),
+  state: (): IModalState => ({ modalState: basicState, isConfirmed: false }),
   actions: {
     openModal(payload: IModalProps) {
       const { props, component } = payload
+      this.isConfirmed = false
 
       // Prevent Scrolling
       const body = document.body
@@ -37,6 +39,10 @@ export const useModalStore = defineStore('modal', {
     },
     openConfirmationModal(title: string, message: string) {
       this.openModal({ component: ConfirmationModal, props: { title: title, message: message } })
+    },
+    confirmAction() {
+      this.isConfirmed = true
+      this.closeModal()
     }
   },
   getters: {}

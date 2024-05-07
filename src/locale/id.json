@@ -29,7 +29,7 @@
     "processing": "Memroses...",
     "search": "Cari...",
     "noData": "Tidak ada data dalam tabel ini",
-    "add": "Tambah Data",
+    "add": "Tambah",
     "sync": "Sinkronisasi",
     "upload": "Unggah",
     "dropFile": "Seret dan jatuhkan berkas di sini",
@@ -51,7 +51,8 @@
     "language": "Bahasa",
     "account": "Akun",
     "notifications": "Notifikasi",
-    "groupMembers": "Anggota Rombel"
+    "groupMembers": "Anggota Rombel",
+    "gradeName": "Nama Kelas"
   },
   "description": {
     "forgotPassword": "Masukkan alamat email terdaftar Anda dan kami akan mengirimkan tautan untuk mengubah kata sandi Anda.",
