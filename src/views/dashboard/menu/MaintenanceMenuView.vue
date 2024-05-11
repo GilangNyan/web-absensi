@@ -148,6 +148,7 @@ const handleClickActions = (event: string, value: any): void => {
     triggerMenuFormModal('U', value)
   }
   if (event === 'delete') {
+    dataStore.setStatus('D')
     confirmationDelete(value)
   }
 }
