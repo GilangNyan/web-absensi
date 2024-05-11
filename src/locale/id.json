@@ -10,6 +10,8 @@
   "view": "Lihat",
   "update": "Ubah",
   "delete": "Hapus",
+  "yes": "Ya",
+  "no": "Tidak",
   "lang": {
     "id": "Indonesia",
     "en": "English"
@@ -52,7 +54,10 @@
     "account": "Akun",
     "notifications": "Notifikasi",
     "groupMembers": "Anggota Rombel",
-    "gradeName": "Nama Kelas"
+    "gradeName": "Nama Kelas",
+    "select": "Pilih",
+    "hasSubmenu": "Memiliki Submenu",
+    "icon": "Ikon"
   },
   "description": {
     "forgotPassword": "Masukkan alamat email terdaftar Anda dan kami akan mengirimkan tautan untuk mengubah kata sandi Anda.",

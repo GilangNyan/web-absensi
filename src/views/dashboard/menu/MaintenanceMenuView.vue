@@ -5,7 +5,7 @@
   </div>
   <TableCustom :columns="columns" :rows="rows" @search="search($event)">
     <template #right-panel>
-      <ButtonRoundedWithIcon color="indigo" :label="$t('label.add')">
+      <ButtonRoundedWithIcon color="indigo" :label="$t('label.add')" @click="triggerMenuFormModal('I')">
         <PlusIcon class="w-4 h-4" />
       </ButtonRoundedWithIcon>
     </template>
@@ -28,7 +28,7 @@
 <script setup lang="ts">
 import TableCustom from '@/components/main/TableCustom.vue';
 import TablePagination from '@/components/main/TablePagination.vue';
-import { ref, onMounted, type Ref } from 'vue';
+import { ref, onMounted, type Ref, computed, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { PlusIcon } from '@heroicons/vue/24/solid';
 import BreadCrumbs from '@/components/main/BreadCrumbs.vue';
@@ -38,9 +38,15 @@ import type { AxiosResponse } from 'axios';
 import { boolStatus, handleErrorResponse, simpleLanguage } from '@/utils/utilities';
 import ButtonDropdownActions from '@/components/buttons/ButtonDropdownActions.vue';
 import { useModalStore } from '@/stores/modal';
+import type TCrudStatus from '@/types/status';
+import { useDataStore } from '@/stores/data';
+import MenuFormModal from '@/components/modals/forms/MenuFormModal.vue';
+import { useToasterStore } from '@/stores/toaster';
 
 const lang = useI18n()
 const modalStore = useModalStore()
+const dataStore = useDataStore()
+const toastStore = useToasterStore()
 
 const columns: Ref = ref([
   {
@@ -74,7 +80,25 @@ let totalItems: Ref<number> = ref(0)
 let totalPages: Ref<number> = ref(0)
 let searchData: Ref<string> = ref('')
 
-  const getData = async (): Promise<void> => {
+let selectedData: Ref<any> = ref('')
+
+// Computed
+const isModalStateConfirmed = computed(() => {
+  return modalStore.isConfirmed
+})
+
+// Watcher
+watch(isModalStateConfirmed, () => {
+  if (modalStore.isConfirmed) {
+    if (dataStore.status == 'I' || dataStore.status == 'U') {
+      getData()
+    } else if (dataStore.status == 'D') {
+      deleteData()
+    }
+  }
+})
+
+const getData = async (): Promise<void> => {
   let req = {
     page: page.value,
     perPage: perPage.value,
@@ -90,7 +114,8 @@ let searchData: Ref<string> = ref('')
         name: simpleLanguage(item.name),
         url: item.url,
         level: item.level,
-        status: boolStatus(item.isActive)
+        status: boolStatus(item.isActive),
+        actions: item
       }
       rows.value.push(entry)
     })
@@ -118,13 +143,36 @@ const search = (event: string): void => {
 }
 
 const handleClickActions = (event: string, value: any): void => {
+  if (event === 'update') {
+    console.log(value)
+    triggerMenuFormModal('U', value)
+  }
   if (event === 'delete') {
     confirmationDelete(value)
   }
 }
 
+const triggerMenuFormModal = (actions: TCrudStatus, data?: any): void => {
+  dataStore.setStatus(actions)
+  modalStore.openModal({ component: MenuFormModal, props: data })
+}
+
 const confirmationDelete = (data: any): void => {
+  selectedData.value = data
   modalStore.openConfirmationModal(lang.t('label.confirm'), lang.t('description.actionsConfirmation', { actions: lang.t('label.delete').toLowerCase() }))
+}
+
+const deleteData = async (): Promise<void> => {
+  const payload = {
+    id: selectedData.value.id
+  }
+  await menuServices.saveMenus(payload)!.then((result: AxiosResponse) => {
+    toastStore.success({ text: lang.t('success.success'), message: lang.t('success.save', { name: result.data.data.name })})
+    getData()
+  }).catch((error: unknown) => {
+    handleErrorResponse(error)
+    console.log(error)
+  })
 }
 
 onMounted(() => {
