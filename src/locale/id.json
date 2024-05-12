@@ -75,7 +75,8 @@
     "gradesData": "Data Kelas",
     "holidaysData": "Data Hari Libur",
     "menuMaintenance": "Kelola Menu",
-    "submenuMaintenance": "Kelola Submenu"
+    "submenuMaintenance": "Kelola Submenu",
+    "systemParameters": "Parameter Sistem"
   },
   "tableHead": {
     "name": "Nama",
@@ -92,7 +93,8 @@
     "status": "Status",
     "level": "Level",
     "menu": "Menu",
-    "submenu": "Submenu"
+    "submenu": "Submenu",
+    "value": "Nilai"
   },
   "success": {
     "success": "Sukses",

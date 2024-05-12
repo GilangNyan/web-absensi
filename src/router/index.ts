@@ -9,6 +9,7 @@ import HolidaysView from '@/views/dashboard/masterData/HolidaysView.vue'
 import HolidaysCUView from '@/views/dashboard/masterData/HolidaysCUView.vue'
 import MaintenanceMenuView from '@/views/dashboard/menu/MaintenanceMenuView.vue'
 import MaintenanceSubmenuView from '@/views/dashboard/menu/MaintenanceSubmenuView.vue'
+import SystemParametersView from '@/views/dashboard/options/SystemParametersView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -106,6 +107,15 @@ const router = createRouter({
       path: '/menus/submenu-maintenance',
       name: 'maintenanceSubmenu',
       component: MaintenanceSubmenuView,
+      meta: {
+        layout: 'MainLayout',
+        requiresAuth: true
+      }
+    },
+    {
+      path: '/options/system-parameters',
+      name: 'systemParameters',
+      component: SystemParametersView,
       meta: {
         layout: 'MainLayout',
         requiresAuth: true

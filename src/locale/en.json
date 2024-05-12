@@ -75,7 +75,8 @@
     "gradesData": "Grades Data",
     "holidaysData": "Holidays Data",
     "menuMaintenance": "Menu Maintenance",
-    "submenuMaintenance": "Submenu Maintenance"
+    "submenuMaintenance": "Submenu Maintenance",
+    "systemParameters": "System Parameters"
   },
   "tableHead": {
     "name": "Name",
@@ -92,7 +93,8 @@
     "status": "Status",
     "level": "Level",
     "menu": "Menu",
-    "submenu": "Submenu"
+    "submenu": "Submenu",
+    "value": "Value"
   },
   "success": {
     "success": "Success",
