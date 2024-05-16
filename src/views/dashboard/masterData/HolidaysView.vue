@@ -8,7 +8,7 @@
       <ButtonRoundedWithIcon color="indigo" :label="$t('label.sync')" @click="sync()" :is-reversed-color="true">
         <ArrowPathIcon class="w-4 h-4" />
       </ButtonRoundedWithIcon>
-      <ButtonRoundedWithIcon color="indigo" :label="$t('label.add')" @click="goToPage('/master-data/holidays/add')">
+      <ButtonRoundedWithIcon color="indigo" :label="$t('label.add')" @click="triggerHolidayFormModal('I')">
         <PlusIcon class="w-4 h-4" />
       </ButtonRoundedWithIcon>
     </template>
@@ -33,7 +33,7 @@ import TableCustom from '@/components/main/TableCustom.vue';
 import { useModalStore } from '@/stores/modal';
 import { useDataStore } from '@/stores/data';
 import type { Ref } from 'vue';
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, computed, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import holidayServices from '@/services/masterData/holidayServices';
 import { formatFullDate, handleErrorResponse, simpleLanguage } from '@/utils/utilities';
@@ -45,6 +45,8 @@ import { useToasterStore } from '@/stores/toaster';
 import BreadCrumbs from '@/components/main/BreadCrumbs.vue';
 import ButtonRoundedWithIcon from '@/components/buttons/ButtonRoundedWithIcon.vue';
 import ButtonDropdownActions from '@/components/buttons/ButtonDropdownActions.vue';
+import type TCrudStatus from '@/types/status';
+import HolidayFormModal from '@/components/modals/forms/HolidayFormModal.vue';
 
 const lang = useI18n()
 
@@ -79,6 +81,22 @@ let perPage: Ref<number> = ref(10)
 let totalItems: Ref<number> = ref(0)
 let totalPages: Ref<number> = ref(0)
 let searchData: Ref<string> = ref('')
+
+let selectedData: Ref<any> = ref('')
+
+const isModalStateConfirmed = computed(() => {
+  return modalStore.isConfirmed
+})
+
+watch(isModalStateConfirmed, () => {
+  if (modalStore.isConfirmed) {
+    if (dataStore.status == 'I' || dataStore.status == 'U') {
+      getData()
+    } else if (dataStore.status == 'D') {
+      deleteData()
+    }
+  }
+})
 
 const getData = async (): Promise<void> => {
   let req = {
@@ -146,13 +164,36 @@ const sync = (): void => {
 }
 
 const handleClickActions = (event: string, value: any): void => {
-  if (event === 'delete') {
+  if (event === 'update') {
+    triggerHolidayFormModal('U', value)
+  }
+  else if (event === 'delete') {
+    dataStore.setStatus('D')
     confirmationDelete(value)
   }
 }
 
+const triggerHolidayFormModal = (actions: TCrudStatus, data?: any): void => {
+  dataStore.setStatus(actions)
+  modalStore.openModal({ component: HolidayFormModal, props: data })
+}
+
 const confirmationDelete = (data: any): void => {
+  selectedData.value = data
   modalStore.openConfirmationModal(lang.t('label.confirm'), lang.t('description.actionsConfirmation', { actions: lang.t('label.delete').toLowerCase() }))
+}
+
+const deleteData = async (): Promise<void> => {
+  const payload = {
+    id: selectedData.value.id
+  }
+  await holidayServices.saveHoliday(payload)!.then((result: AxiosResponse) => {
+    toastStore.success({ text: lang.t('success.success'), message: lang.t('success.save', { name: result.data.data.name })})
+    getData()
+  }).catch((error: unknown) => {
+    handleErrorResponse(error)
+    console.log(error)
+  })
 }
 
 onMounted(() => {
