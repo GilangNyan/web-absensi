@@ -19,5 +19,14 @@ export default {
       config.data = data
       return axios.delete('/grade', config)
     }
+  },
+  getAcademicYears(data: any) {
+    const config = authHeader()
+    config.params = data
+    return axios.get('/academic-year', config)
+  },
+  registerStudentsGrade(data: any) {
+    const config = authHeader()
+    return axios.post('/grade/register', data, config)
   }
 }

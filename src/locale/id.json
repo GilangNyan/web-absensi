@@ -94,7 +94,8 @@
     "level": "Level",
     "menu": "Menu",
     "submenu": "Submenu",
-    "value": "Nilai"
+    "value": "Nilai",
+    "studentsCount": "Jumlah Siswa"
   },
   "success": {
     "success": "Sukses",

@@ -94,7 +94,8 @@
     "level": "Level",
     "menu": "Menu",
     "submenu": "Submenu",
-    "value": "Value"
+    "value": "Value",
+    "studentsCount": "Students Count"
   },
   "success": {
     "success": "Success",

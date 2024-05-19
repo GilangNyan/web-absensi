@@ -59,6 +59,10 @@ const columns: Ref = ref([
     name: 'name',
     title: lang.t('tableHead.name')
   },
+  // {
+  //   name: 'count',
+  //   title: lang.t('tableHead.studentsCount')
+  // },
   {
     name: 'actions',
     title: lang.t('tableHead.actions')
@@ -112,6 +116,7 @@ const getData = async (): Promise<void> => {
     datas.value.rows.map((item: any) => {
       let entry: object = {
         name: item.name,
+        count: item.students.length,
         actions: item
       }
       rows.value.push(entry)
