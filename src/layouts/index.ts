@@ -15,6 +15,7 @@ export default {
 declare module 'vue-router' {
   interface RouteMeta {
     requiresAuth: boolean
-    layout: string
+    layout: string,
+    isAuthPage?: boolean
   }
 }

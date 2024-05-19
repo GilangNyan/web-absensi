@@ -20,7 +20,8 @@ const router = createRouter({
       component: LandingView,
       meta: {
         layout: 'BlankLayout',
-        requiresAuth: false
+        requiresAuth: false,
+        isAuthPage: false
       }
     },
     {
@@ -37,7 +38,8 @@ const router = createRouter({
       component: LoginView,
       meta: {
         layout: 'DividedAuthLayout',
-        requiresAuth: false
+        requiresAuth: false,
+        isAuthPage: true
       }
     },
     {
