@@ -57,7 +57,8 @@
     "gradeName": "Nama Kelas",
     "select": "Pilih",
     "hasSubmenu": "Memiliki Submenu",
-    "icon": "Ikon"
+    "icon": "Ikon",
+    "time": "Waktu"
   },
   "description": {
     "forgotPassword": "Masukkan alamat email terdaftar Anda dan kami akan mengirimkan tautan untuk mengubah kata sandi Anda.",

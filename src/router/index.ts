@@ -10,6 +10,7 @@ import HolidaysCUView from '@/views/dashboard/masterData/HolidaysCUView.vue'
 import MaintenanceMenuView from '@/views/dashboard/menu/MaintenanceMenuView.vue'
 import MaintenanceSubmenuView from '@/views/dashboard/menu/MaintenanceSubmenuView.vue'
 import SystemParametersView from '@/views/dashboard/options/SystemParametersView.vue'
+import PresenceQrScanView from '@/views/landing/PresenceQrScanView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -18,6 +19,16 @@ const router = createRouter({
       path: '/',
       name: 'home',
       component: LandingView,
+      meta: {
+        layout: 'BlankLayout',
+        requiresAuth: false,
+        isAuthPage: false
+      }
+    },
+    {
+      path: '/presence-qr-scan',
+      name: 'presenceQrScan',
+      component: PresenceQrScanView,
       meta: {
         layout: 'BlankLayout',
         requiresAuth: false,

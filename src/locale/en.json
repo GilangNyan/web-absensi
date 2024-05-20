@@ -57,7 +57,8 @@
     "gradeName": "Grade Name",
     "select": "Select",
     "hasSubmenu": "Has Submenu",
-    "icon": "Icon"
+    "icon": "Icon",
+    "time": "Time"
   },
   "description": {
     "forgotPassword": "Enter your registered email and we'll send you a link to reset your password.",
