@@ -8,7 +8,18 @@
 
 <script setup lang="ts">
 import jsQR from 'jsqr';
-import { onBeforeUnmount, onMounted, ref, type Ref } from 'vue';
+import { onBeforeUnmount, onMounted, ref, watch, type Ref } from 'vue';
+
+interface Props {
+  isDetected: boolean
+}
+
+const props = defineProps<Props>()
+
+const emits = defineEmits<{
+  qrCode: [qrCode: string],
+  isDetected: [isDetected: boolean]
+}>()
 
 const video: Ref<HTMLVideoElement | null> = ref(null)
 const canvas: Ref<HTMLCanvasElement | null> = ref(null)
@@ -45,34 +56,44 @@ const scanQrCode = () => {
   const scan = () => {
     if (!scanning.value) return
 
-    if (video.value!.readyState === video.value!.HAVE_ENOUGH_DATA) {
-      canvas.value!.width = video.value!.videoWidth
-      canvas.value!.height = video.value!.videoHeight
-      context.drawImage(video.value!, 0, 0, canvas.value!.width, canvas.value!.height)
-      const imageData = context.getImageData(0, 0, canvas.value!.width, canvas.value!.height)
-      const code = jsQR(imageData.data, imageData.width, imageData.height)
+    if (video.value && !props.isDetected) {
+      if (video.value!.readyState === video.value!.HAVE_ENOUGH_DATA) {
+        canvas.value!.width = video.value!.videoWidth
+        canvas.value!.height = video.value!.videoHeight
+        context.drawImage(video.value!, 0, 0, canvas.value!.width, canvas.value!.height)
+        const imageData = context.getImageData(0, 0, canvas.value!.width, canvas.value!.height)
+        const code = jsQR(imageData.data, imageData.width, imageData.height)
 
-      if (code) {
-        console.log('QR Code terdeteksi', code.data)
-        scanning.value = false // Berhenti scan setelah code didapatkan
+        if (code) {
+          console.log('QR Code terdeteksi', code.data)
+          scanning.value = false // Berhenti scan setelah code didapatkan
 
-        // Ambil gambar
-        const capturedImgUrl = canvas.value!.toDataURL('image/png')
-        capturedImg.value = capturedImgUrl
+          // Ambil gambar
+          const capturedImgUrl = canvas.value!.toDataURL('image/png')
+          capturedImg.value = capturedImgUrl
 
-        stopCamera()
-        alert(`QR Code Terdeteksi: ${code.data}`)
+          stopCamera()
+          emits('qrCode', code.data)
+          emits('isDetected', true)
+        } else {
+          requestAnimationFrame(scan)
+        }
       } else {
         requestAnimationFrame(scan)
       }
-    } else {
-      requestAnimationFrame(scan)
     }
     
   }
 
   scan()
 }
+
+watch(() => props.isDetected, (newValue) => {
+  if (!newValue) {
+    scanning.value = true
+    startCamera()
+  }
+})
 
 onMounted(() => {
   startCamera()
