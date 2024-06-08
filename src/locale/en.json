@@ -77,7 +77,8 @@
     "holidaysData": "Holidays Data",
     "menuMaintenance": "Menu Maintenance",
     "submenuMaintenance": "Submenu Maintenance",
-    "systemParameters": "System Parameters"
+    "systemParameters": "System Parameters",
+    "generateQr": "Generate QR Codes"
   },
   "tableHead": {
     "name": "Name",
@@ -96,14 +97,16 @@
     "menu": "Menu",
     "submenu": "Submenu",
     "value": "Value",
-    "studentsCount": "Students Count"
+    "studentsCount": "Students Count",
+    "academicYear": "Academic Year"
   },
   "success": {
     "success": "Success",
     "login": "Login Success",
     "logout": "Logout Success",
     "save": "Success saving data with name {name}",
-    "delete": "Success deleting data with name {name}"
+    "delete": "Success deleting data with name {name}",
+    "recordAttendance": "Attendance recorded successfully"
   },
   "warning": {
     "warning": "Warning",
@@ -111,7 +114,8 @@
     "fileExist": "File already exist"
   },
   "error": {
-    "error": "Error"
+    "error": "Error",
+    "forbiddenAttendanceHoliday": "Cannot Record Attendance on Holiday"
   },
   "active": "Active",
   "inactive": "Inactive"

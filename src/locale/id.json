@@ -77,7 +77,8 @@
     "holidaysData": "Data Hari Libur",
     "menuMaintenance": "Kelola Menu",
     "submenuMaintenance": "Kelola Submenu",
-    "systemParameters": "Parameter Sistem"
+    "systemParameters": "Parameter Sistem",
+    "generateQr": "Generate Kode QR"
   },
   "tableHead": {
     "name": "Nama",
@@ -96,14 +97,16 @@
     "menu": "Menu",
     "submenu": "Submenu",
     "value": "Nilai",
-    "studentsCount": "Jumlah Siswa"
+    "studentsCount": "Jumlah Siswa",
+    "academicYear": "Tahun Pelajaran"
   },
   "success": {
     "success": "Sukses",
     "login": "Sukses Login",
     "logout": "Sukses Logout",
     "save": "Sukses menyimpan data dengan nama {name}",
-    "delete": "Sukses menghapus data dengan nama {name}"
+    "delete": "Sukses menghapus data dengan nama {name}",
+    "recordAttendance": "Berhasil mencatat kehadiran"
   },
   "warning": {
     "warning": "Peringatan",
@@ -111,7 +114,8 @@
     "fileExist": "Berkas sudah ada"
   },
   "error": {
-    "error": "Kesalahan"
+    "error": "Kesalahan",
+    "forbiddenAttendanceHoliday": "Absensi Tidak Dapat Dilakukan Pada Hari Libur"
   },
   "active": "Aktif",
   "inactive": "Nonaktif"

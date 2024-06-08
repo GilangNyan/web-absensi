@@ -11,6 +11,7 @@ import MaintenanceMenuView from '@/views/dashboard/menu/MaintenanceMenuView.vue'
 import MaintenanceSubmenuView from '@/views/dashboard/menu/MaintenanceSubmenuView.vue'
 import SystemParametersView from '@/views/dashboard/options/SystemParametersView.vue'
 import PresenceQrScanView from '@/views/landing/PresenceQrScanView.vue'
+import GenerateQrCodeView from '@/views/dashboard/GenerateQrCodeView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -102,6 +103,15 @@ const router = createRouter({
       path: '/master-data/holidays/:status',
       name: 'holidaysCU',
       component: HolidaysCUView,
+      meta: {
+        layout: 'MainLayout',
+        requiresAuth: true
+      }
+    },
+    {
+      path: '/generate-qr-code',
+      name: 'generateQrCode',
+      component: GenerateQrCodeView,
       meta: {
         layout: 'MainLayout',
         requiresAuth: true
