@@ -58,7 +58,9 @@
     "select": "Pilih",
     "hasSubmenu": "Memiliki Submenu",
     "icon": "Ikon",
-    "time": "Waktu"
+    "time": "Waktu",
+    "year": "Tahun",
+    "month": "Bulan"
   },
   "description": {
     "forgotPassword": "Masukkan alamat email terdaftar Anda dan kami akan mengirimkan tautan untuk mengubah kata sandi Anda.",
@@ -78,7 +80,8 @@
     "menuMaintenance": "Kelola Menu",
     "submenuMaintenance": "Kelola Submenu",
     "systemParameters": "Parameter Sistem",
-    "generateQr": "Generate Kode QR"
+    "generateQr": "Generate Kode QR",
+    "monthlyAttendance": "Rekap Absensi Bulanan"
   },
   "tableHead": {
     "name": "Nama",

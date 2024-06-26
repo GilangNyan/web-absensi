@@ -5,5 +5,10 @@ export default {
   recordAttendance(data: unknown) {
     const config = authHeader()
     return axios.post('/record-attendance', data, config)
+  },
+  getMonthlyAttendance(data: unknown) {
+    const config = authHeader()
+    config.params = data
+    return axios.get('/attendance/monthly', config)
   }
 }

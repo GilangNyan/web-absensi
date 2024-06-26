@@ -12,6 +12,7 @@ import MaintenanceSubmenuView from '@/views/dashboard/menu/MaintenanceSubmenuVie
 import SystemParametersView from '@/views/dashboard/options/SystemParametersView.vue'
 import PresenceQrScanView from '@/views/landing/PresenceQrScanView.vue'
 import GenerateQrCodeView from '@/views/dashboard/GenerateQrCodeView.vue'
+import MonthlyAttendanceView from '@/views/dashboard/reports/MonthlyAttendanceView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -139,6 +140,15 @@ const router = createRouter({
       path: '/options/system-parameters',
       name: 'systemParameters',
       component: SystemParametersView,
+      meta: {
+        layout: 'MainLayout',
+        requiresAuth: true
+      }
+    },
+    {
+      path: '/reports/monthly-attendance',
+      name: 'monthlyAttendance',
+      component: MonthlyAttendanceView,
       meta: {
         layout: 'MainLayout',
         requiresAuth: true

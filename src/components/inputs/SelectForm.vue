@@ -43,7 +43,7 @@ interface Props {
   name: string
   label: string
   options: ISelectOption[] | string[] | number[] | boolean[] | null
-  modelValue: ISelectOption | string | number | boolean | null
+  modelValue: ISelectOption | string | number | boolean | null | undefined
 }
 
 const props = defineProps<Props>()

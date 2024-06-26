@@ -58,7 +58,9 @@
     "select": "Select",
     "hasSubmenu": "Has Submenu",
     "icon": "Icon",
-    "time": "Time"
+    "time": "Time",
+    "year": "Year",
+    "month": "Month"
   },
   "description": {
     "forgotPassword": "Enter your registered email and we'll send you a link to reset your password.",
@@ -78,7 +80,8 @@
     "menuMaintenance": "Menu Maintenance",
     "submenuMaintenance": "Submenu Maintenance",
     "systemParameters": "System Parameters",
-    "generateQr": "Generate QR Codes"
+    "generateQr": "Generate QR Codes",
+    "monthlyAttendance": "Monthly Attendance Reports"
   },
   "tableHead": {
     "name": "Name",
