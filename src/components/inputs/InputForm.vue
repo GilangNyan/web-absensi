@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="w-full flex flex-col">
     <label
       :for="name"
       class="block mb-2 text-sm font-medium text-gray-600"
@@ -14,6 +14,7 @@
       :class="errorMessage != null ? 'focus:border-red-500 focus:ring-red-500 border-red-500' : 'focus:border-cyan-500 focus:ring-cyan-500'"
       v-model="value"
       :required="required"
+      :disabled="disabled"
       v-if="type != 'textarea'"
     >
     <textarea
@@ -23,6 +24,8 @@
       class="p-2 shadow-sm text-gray-800 w-full border border-gray-200 placeholder-gray-200 focus:outline-none focus:ring-1 rounded-lg text-sm resize"
       :class="errorMessage != null ? 'focus:border-red-500 focus:ring-red-500 border-red-500' : 'focus:border-cyan-500 focus:ring-cyan-500'"
       v-model="value"
+      :required="required"
+      :disabled="disabled"
       v-else
     ></textarea>
     <span class="text-red-500 text-xs text-center justify-center w-full flex font-semibold">
@@ -40,10 +43,12 @@ interface Props {
   modelValue: string | number | null
   required?: boolean
   type?: string
+  disabled?: boolean
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  type: 'text'
+  type: 'text',
+  disabled: false
 })
 
 const { value, errorMessage } = useField(() => props.name, undefined, { syncVModel: true })

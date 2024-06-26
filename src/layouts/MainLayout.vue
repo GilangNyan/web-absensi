@@ -9,7 +9,7 @@
       </div>
     </div>
   </div>
-  <!-- <ToasterNotifications /> -->
+  <ToasterNotifications />
   <ModalWindow />
 </template>
 
@@ -19,7 +19,7 @@ import type { Ref } from 'vue'
 import SideNavbar from '@/components/main/SideNavbar.vue'
 // import TopNavbar from '@/components/main/TopNavbar.vue'
 import TitleBar from '@/components/main/TitleBar.vue'
-// import ToasterNotifications from '@/components/main/ToasterNotifications.vue';
+import ToasterNotifications from '@/components/main/ToasterNotifications.vue';
 import ModalWindow from '@/components/main/ModalWindow.vue';
 
 let sidebarOpen: Ref<boolean> = ref(true)

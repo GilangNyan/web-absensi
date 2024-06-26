@@ -14,10 +14,10 @@
       <img src="@/assets/images/qr.png" alt="QR" class="w-72 drop-shadow-lg">
     </div>
   </div>
-  <!-- <ToasterNotifications /> -->
+  <ToasterNotifications />
 </template>
 
 <script setup lang="ts">
-// import ToasterNotifications from '@/components/main/ToasterNotifications.vue';
+import ToasterNotifications from '@/components/main/ToasterNotifications.vue';
 
 </script>

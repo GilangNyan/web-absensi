@@ -9,6 +9,10 @@ import HolidaysView from '@/views/dashboard/masterData/HolidaysView.vue'
 import HolidaysCUView from '@/views/dashboard/masterData/HolidaysCUView.vue'
 import MaintenanceMenuView from '@/views/dashboard/menu/MaintenanceMenuView.vue'
 import MaintenanceSubmenuView from '@/views/dashboard/menu/MaintenanceSubmenuView.vue'
+import SystemParametersView from '@/views/dashboard/options/SystemParametersView.vue'
+import PresenceQrScanView from '@/views/landing/PresenceQrScanView.vue'
+import GenerateQrCodeView from '@/views/dashboard/GenerateQrCodeView.vue'
+import MonthlyAttendanceView from '@/views/dashboard/reports/MonthlyAttendanceView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -19,7 +23,18 @@ const router = createRouter({
       component: LandingView,
       meta: {
         layout: 'BlankLayout',
-        requiresAuth: false
+        requiresAuth: false,
+        isAuthPage: false
+      }
+    },
+    {
+      path: '/presence-qr-scan',
+      name: 'presenceQrScan',
+      component: PresenceQrScanView,
+      meta: {
+        layout: 'BlankLayout',
+        requiresAuth: false,
+        isAuthPage: false
       }
     },
     {
@@ -36,7 +51,8 @@ const router = createRouter({
       component: LoginView,
       meta: {
         layout: 'DividedAuthLayout',
-        requiresAuth: false
+        requiresAuth: false,
+        isAuthPage: true
       }
     },
     {
@@ -94,6 +110,15 @@ const router = createRouter({
       }
     },
     {
+      path: '/generate-qr-code',
+      name: 'generateQrCode',
+      component: GenerateQrCodeView,
+      meta: {
+        layout: 'MainLayout',
+        requiresAuth: true
+      }
+    },
+    {
       path: '/menus/menu-maintenance',
       name: 'maintenanceMenu',
       component: MaintenanceMenuView,
@@ -106,6 +131,24 @@ const router = createRouter({
       path: '/menus/submenu-maintenance',
       name: 'maintenanceSubmenu',
       component: MaintenanceSubmenuView,
+      meta: {
+        layout: 'MainLayout',
+        requiresAuth: true
+      }
+    },
+    {
+      path: '/options/system-parameters',
+      name: 'systemParameters',
+      component: SystemParametersView,
+      meta: {
+        layout: 'MainLayout',
+        requiresAuth: true
+      }
+    },
+    {
+      path: '/reports/monthly-attendance',
+      name: 'monthlyAttendance',
+      component: MonthlyAttendanceView,
       meta: {
         layout: 'MainLayout',
         requiresAuth: true

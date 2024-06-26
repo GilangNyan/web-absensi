@@ -10,6 +10,8 @@
   "view": "Lihat",
   "update": "Ubah",
   "delete": "Hapus",
+  "yes": "Ya",
+  "no": "Tidak",
   "lang": {
     "id": "Indonesia",
     "en": "English"
@@ -29,7 +31,7 @@
     "processing": "Memroses...",
     "search": "Cari...",
     "noData": "Tidak ada data dalam tabel ini",
-    "add": "Tambah Data",
+    "add": "Tambah",
     "sync": "Sinkronisasi",
     "upload": "Unggah",
     "dropFile": "Seret dan jatuhkan berkas di sini",
@@ -51,7 +53,14 @@
     "language": "Bahasa",
     "account": "Akun",
     "notifications": "Notifikasi",
-    "groupMembers": "Anggota Rombel"
+    "groupMembers": "Anggota Rombel",
+    "gradeName": "Nama Kelas",
+    "select": "Pilih",
+    "hasSubmenu": "Memiliki Submenu",
+    "icon": "Ikon",
+    "time": "Waktu",
+    "year": "Tahun",
+    "month": "Bulan"
   },
   "description": {
     "forgotPassword": "Masukkan alamat email terdaftar Anda dan kami akan mengirimkan tautan untuk mengubah kata sandi Anda.",
@@ -69,7 +78,10 @@
     "gradesData": "Data Kelas",
     "holidaysData": "Data Hari Libur",
     "menuMaintenance": "Kelola Menu",
-    "submenuMaintenance": "Kelola Submenu"
+    "submenuMaintenance": "Kelola Submenu",
+    "systemParameters": "Parameter Sistem",
+    "generateQr": "Generate Kode QR",
+    "monthlyAttendance": "Rekap Absensi Bulanan"
   },
   "tableHead": {
     "name": "Nama",
@@ -86,14 +98,18 @@
     "status": "Status",
     "level": "Level",
     "menu": "Menu",
-    "submenu": "Submenu"
+    "submenu": "Submenu",
+    "value": "Nilai",
+    "studentsCount": "Jumlah Siswa",
+    "academicYear": "Tahun Pelajaran"
   },
   "success": {
     "success": "Sukses",
     "login": "Sukses Login",
     "logout": "Sukses Logout",
     "save": "Sukses menyimpan data dengan nama {name}",
-    "delete": "Sukses menghapus data dengan nama {name}"
+    "delete": "Sukses menghapus data dengan nama {name}",
+    "recordAttendance": "Berhasil mencatat kehadiran"
   },
   "warning": {
     "warning": "Peringatan",
@@ -101,7 +117,8 @@
     "fileExist": "Berkas sudah ada"
   },
   "error": {
-    "error": "Kesalahan"
+    "error": "Kesalahan",
+    "forbiddenAttendanceHoliday": "Absensi Tidak Dapat Dilakukan Pada Hari Libur"
   },
   "active": "Aktif",
   "inactive": "Nonaktif"

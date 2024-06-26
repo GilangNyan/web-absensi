@@ -10,6 +10,8 @@
   "view": "View",
   "update": "Update",
   "delete": "Delete",
+  "yes": "Yes",
+  "no": "No",
   "lang": {
     "id": "Indonesia",
     "en": "English"
@@ -51,7 +53,14 @@
     "language": "Language",
     "account": "Account",
     "notifications": "Notifications",
-    "groupMembers": "Group Members"
+    "groupMembers": "Group Members",
+    "gradeName": "Grade Name",
+    "select": "Select",
+    "hasSubmenu": "Has Submenu",
+    "icon": "Icon",
+    "time": "Time",
+    "year": "Year",
+    "month": "Month"
   },
   "description": {
     "forgotPassword": "Enter your registered email and we'll send you a link to reset your password.",
@@ -69,7 +78,10 @@
     "gradesData": "Grades Data",
     "holidaysData": "Holidays Data",
     "menuMaintenance": "Menu Maintenance",
-    "submenuMaintenance": "Submenu Maintenance"
+    "submenuMaintenance": "Submenu Maintenance",
+    "systemParameters": "System Parameters",
+    "generateQr": "Generate QR Codes",
+    "monthlyAttendance": "Monthly Attendance Reports"
   },
   "tableHead": {
     "name": "Name",
@@ -86,14 +98,18 @@
     "status": "Status",
     "level": "Level",
     "menu": "Menu",
-    "submenu": "Submenu"
+    "submenu": "Submenu",
+    "value": "Value",
+    "studentsCount": "Students Count",
+    "academicYear": "Academic Year"
   },
   "success": {
     "success": "Success",
     "login": "Login Success",
     "logout": "Logout Success",
     "save": "Success saving data with name {name}",
-    "delete": "Success deleting data with name {name}"
+    "delete": "Success deleting data with name {name}",
+    "recordAttendance": "Attendance recorded successfully"
   },
   "warning": {
     "warning": "Warning",
@@ -101,7 +117,8 @@
     "fileExist": "File already exist"
   },
   "error": {
-    "error": "Error"
+    "error": "Error",
+    "forbiddenAttendanceHoliday": "Cannot Record Attendance on Holiday"
   },
   "active": "Active",
   "inactive": "Inactive"

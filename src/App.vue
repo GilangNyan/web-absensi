@@ -40,9 +40,11 @@ router.beforeEach((to, from, next) => {
       }
     })
   } else if (!to.meta.requiresAuth && (authStore.token || authStore.menu)) {
-    // let tokenValue = VueJwtDecode.decode(authStore.token)
-    // console.log(tokenValue)
-    next('/dashboard')
+    if (to.meta.isAuthPage) {
+      next('/dashboard')
+    } else {
+      next()
+    }
   } else {
     next()
   }

@@ -27,19 +27,20 @@
           </div>
         </div>
         <!-- Card 2 -->
-        <div class="card">
+        <div class="card cursor-pointer" @click="goToPage('/presence-qr-scan')">
           <QrCodeIcon class="w-2/3 h-2/3" />
         </div>
         <!-- Card 3 -->
-        <div class="card cursor-pointer" @click="goToPage('/login')">
-          <!--  -->
+        <div class="card cursor-pointer" @click="goToPage(auth.token ? '/dashboard' : '/login')">
+          <UserIcon class="w-2/3 h-2/3" />
         </div>
       </div>
       <!-- Button Grid -->
       <div class="grid grid-cols-3 gap-4 w-10/12">
         <ButtonRoundedFullWidth color="blue" :label="dateLabel" :loading="false" />
-        <ButtonRoundedFullWidth color="blue" :label="$t('label.takeAttendance')" :loading="false" />
-        <ButtonRoundedFullWidth color="blue" :label="$t('label.adminDashboard')" :loading="false" @click="goToPage('/login')" />
+        <ButtonRoundedFullWidth color="blue" :label="$t('label.takeAttendance')" :loading="false" @click="goToPage('/presence-qr-scan')" />
+        <ButtonRoundedFullWidth color="blue" :label="$t('label.adminDashboard')" :loading="false" @click="goToPage('/dashboard')" v-if="auth.token"/>
+        <ButtonRoundedFullWidth color="blue" :label="$t('login')" :loading="false" @click="goToPage('/login')" v-else />
       </div>
     </div>
   </div>
@@ -47,10 +48,13 @@
 
 <script setup lang="ts">
 import { onMounted, ref, type Ref } from 'vue';
-import { QrCodeIcon } from '@heroicons/vue/24/solid';
+import { QrCodeIcon, UserIcon } from '@heroicons/vue/24/solid';
 import ButtonRoundedFullWidth from '@/components/buttons/ButtonRoundedFullWidth.vue';
 import { formatFullDate } from '@/utils/utilities';
 import router from '@/router';
+import { useAuthStore } from '@/stores/auth';
+
+const auth = useAuthStore()
 
 let hours: Ref<number> = ref(0)
 let minutes: Ref<number> = ref(0)

@@ -51,7 +51,7 @@ const login = async () => {
   }
   await getLocation()
   await authenticationServices.login(payload).then(result => {
-    authStore.setCredentials(result.data.data.accessToken, result.data.data.menus)
+    authStore.setCredentials(result.data.data.accessToken, result.data.data.menus, result.data.data.academicYear)
     isLoading = false
     router.push('/dashboard')
     toasterStore.success({ text: lang.t('success.success'), message: lang.t('success.login') })

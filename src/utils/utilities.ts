@@ -6,6 +6,8 @@ import { useToasterStore } from "@/stores/toaster"
 import * as XLSX from "xlsx"
 import { DateTime } from "luxon"
 import type { VNode } from "vue"
+import jsPDF from "jspdf"
+import QRCode from "qrcode"
 
 export const simpleLanguage = (string: string) => {
   const languageStore = useLanguageStore()
@@ -30,11 +32,13 @@ export const handleErrorResponse = (error: any) => {
   const toasterStore = useToasterStore()
   const lang = i18nSetup
   if (error.name == 'AxiosError') {
+    console.log(error)
     if (error.response.data.error.errors.name == 'TokenExpiredError') {
-      // toasterStore.error({ text: 'Error!', message: 'masuk sini'})
       authStore.clearCredentials()
       router.push('/login')
       toasterStore.warning({ text: lang.global.t('warning.warning'), message: lang.global.t('warning.sessionExpired') })
+    } else if (error.response.data.error.errors == 'ForbiddenAttendanceError') {
+      toasterStore.warning({ text: lang.global.t('warning.warning'), message: lang.global.t('error.forbiddenAttendanceHoliday') })
     }
   } else {
     toasterStore.error({ text: 'Error!', message: error.message })
@@ -142,4 +146,39 @@ export const findElementByRefName = (vnode: VNode, refName: string): HTMLElement
     }
   }
   return null
+}
+
+export const generatePdfQrList = async (datum: any[]): Promise<string> => {
+  const doc = new jsPDF()
+
+  const margin = 10
+  const qrSize = 50
+  const cellWidth = (doc.internal.pageSize.width - 2 * margin) / 4
+  const cellHeight = 60
+
+  let x = margin
+  let y = margin
+
+  await datum.forEach(async (item, index) => {
+    const qrDataUrl = await QRCode.toDataURL(item.nisn, { width: qrSize })
+    doc.addImage(qrDataUrl, 'PNG', x, y, qrSize, qrSize) // Tambah Gambar QR
+    const posX = x + cellWidth / 2 // Mencari posisi tengah setiap cell
+    doc.setFontSize(10)
+    doc.text(item.fullname, posX, y + qrSize + 2, { align: "center" }) // Tambah Nama
+    doc.text(item.nisn, posX, y + qrSize + 6, { align: "center" }) // Tambah NISN
+    x += cellWidth // Pindah ke kolom berikutnya
+    // Jika sudah mencapai 4 kolom, pindah ke baris berikutnya
+    if ((index + 1) % 4 === 0) {
+      x = margin
+      y += cellHeight
+      // Jika sudah mencapai akhir halaman, pindah ke halaman selanjutnya
+      if (y + cellHeight > doc.internal.pageSize.height - margin) {
+        doc.addPage()
+        y = margin
+      }
+    }
+  })
+  // doc.save()
+  const pdfUrl = doc.output('datauristring')
+  return pdfUrl
 }

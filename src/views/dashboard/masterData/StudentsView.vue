@@ -43,9 +43,11 @@ import BreadCrumbs from '@/components/main/BreadCrumbs.vue';
 import ButtonRoundedWithIcon from '@/components/buttons/ButtonRoundedWithIcon.vue';
 import ButtonDropdownActions from '@/components/buttons/ButtonDropdownActions.vue';
 import type IOrder from '@/types/order';
+import { useAuthStore } from '@/stores/auth';
 
 const lang = useI18n()
 const modalStore = useModalStore()
+const authStore = useAuthStore()
 
 const columns: Ref = ref([
   {
@@ -112,7 +114,13 @@ const getData = async (): Promise<void> => {
     totalItems.value = datas.totalItems
     totalPages.value = datas.totalPages
     datas.rows.map((items: any) => {
-      // let grades = items.gradeGroups.length != 0 ? `${items.gradeGroups[0].grade.roman} ${items.gradeGroups[0].name}` : ''
+      let grades = ''
+      if (items.grades && items.grades.length != 0) {
+        const findCurrentGrade = items.grades.find((item: any) => {
+          return item.student_grade.academicYearId === authStore.year.id
+        })
+        grades = findCurrentGrade.name
+      }
       let entry: object = {
         fullname: items.fullname,
         nisn: items.nisn,
@@ -120,7 +128,7 @@ const getData = async (): Promise<void> => {
         gender: items.gender,
         birthPlace: items.birthPlace,
         birthDate: items.birthDate,
-        // grade: grades,
+        grade: grades,
         actions: items.id
       }
       rows.value.push(entry)

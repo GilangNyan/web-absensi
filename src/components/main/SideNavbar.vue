@@ -2,20 +2,21 @@
   <div :class="props.sidebarOpen && props.screenWidth <= 640 ? 'absolute flex w-full h-screen' : 'flex w-fit h-screen'">
     <Transition name="slide-left">
       <aside
-        class="bg-indigo-600 w-60 h-screen shadow-sm pl-2"
-        :class="props.screenWidth <= 640 ? 'z-30 absolute' : ''"
+        class="bg-indigo-600 w-60 h-screen shadow-sm pl-2 overflow-y-auto"
+        :class="props.screenWidth <= 640 ? 'z-30 absolute' : 'z-30'"
         v-show="props.sidebarOpen"
       >
         <div class="flex items-center justify-center p-4 font-extrabold">
+          <span class="bg-orange-500 text-white text-3xl px-2.5 py-0.5 mr-2 rounded-lg">E</span>
           <h1 class="text-white flex flex-col">
             <span class="text-xl">
-              <span class="bg-orange-500 px-2.5 py-0.5 mr-2 rounded-lg">E</span>Absensi
+              Absensi
             </span>
-            <span class="text-xs ml-10 font-semibold">SMAN 1 Beber</span>
+            <span class="text-xs font-semibold">SMAN 1 Beber</span>
           </h1>
         </div>
         <!-- <hr> -->
-        <div class="py-2">
+        <div class="py-2 overflow-y-auto">
           <template v-for="(item, index) in menus" :key="index">
             <MenuItems :title="item.name" :href="item.url" :icon="item.icon" :has-child="item.hasChild" :submenus="item.submenus"/>
           </template>

@@ -1,6 +1,5 @@
+import type TCrudStatus from "@/types/status"
 import { defineStore } from "pinia"
-
-type TCrudStatus = 'I' | 'U' | 'D' | null
 
 interface DataState {
   values: any | null
