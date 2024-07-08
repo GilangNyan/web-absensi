@@ -128,7 +128,7 @@ const getGrades = async (): Promise<void> => {
 
 const downloadZippedQrImage = async (): Promise<void> => {
   const academicYearNoSymbol = academicYear.value?.label.replace('/', '')
-  saveAs(zippedQrImage.value, `${academicYearNoSymbol}_${grade.value?.label}_QRCode.zip`)
+  saveAs((zippedQrImage.value as Blob), `${academicYearNoSymbol}_${grade.value?.label}_QRCode.zip`)
 }
 
 onMounted(() => {
