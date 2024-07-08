@@ -41,7 +41,7 @@ const buttonColorMap: Record<TButtonColor, string> = {
   'orange': 'bg-orange-500 text-white hover:bg-orange-400 disabled:bg-orange-400',
   'gray': 'bg-gray-300 text-gray-800 hover:bg-gray-200 disabled:bg-gray-200 disabled:text-gray-600',
   'indigo': props.isReversedColor ?
-    'bg-indigo-50 text-indigo-600 hover:bg-indigo-200 border-2 border-indigo-600 font-bold disabled:bg-indigo-100' : 
+    'bg-indigo-50 text-indigo-600 hover:bg-indigo-200 border-2 border-indigo-600 font-bold disabled:bg-gray-100 disabled:border-gray-400 disabled:text-gray-400' : 
     'bg-indigo-600 text-white hover:bg-indigo-500 disabled:bg-indigo-400'
 }
 </script>
