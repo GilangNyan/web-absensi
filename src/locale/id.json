@@ -29,7 +29,7 @@
     "backToLogin": "Kembali ke halaman Login",
     "noAccountRegister": "Belum punya akun? Daftar",
     "processing": "Memroses...",
-    "search": "Cari...",
+    "search": "Cari",
     "noData": "Tidak ada data dalam tabel ini",
     "add": "Tambah",
     "sync": "Sinkronisasi",
@@ -60,7 +60,8 @@
     "icon": "Ikon",
     "time": "Waktu",
     "year": "Tahun",
-    "month": "Bulan"
+    "month": "Bulan",
+    "downloadAsZip": "Unduh Sebagai ZIP"
   },
   "description": {
     "forgotPassword": "Masukkan alamat email terdaftar Anda dan kami akan mengirimkan tautan untuk mengubah kata sandi Anda.",

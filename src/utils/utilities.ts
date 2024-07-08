@@ -8,6 +8,7 @@ import { DateTime } from "luxon"
 import type { VNode } from "vue"
 import jsPDF from "jspdf"
 import QRCode from "qrcode"
+import JSZip from "jszip"
 
 export const simpleLanguage = (string: string) => {
   const languageStore = useLanguageStore()
@@ -181,4 +182,20 @@ export const generatePdfQrList = async (datum: any[]): Promise<string> => {
   // doc.save()
   const pdfUrl = doc.output('datauristring')
   return pdfUrl
+}
+
+export const generateQrImageZipped = async (datum: any[]): Promise<Blob> => {
+  const zip = new JSZip()
+  for (const [index, item] of datum.entries()) {
+    const qrDataUrl = await QRCode.toDataURL(item.nisn)
+
+    // Konversi ke Blob
+    const response = await fetch(qrDataUrl)
+    const blob = await response.blob()
+
+    // Tambahkan gambar ke zip
+    zip.file(`${index + 1} ${item.fullname}-${item.nisn}.png`, blob)
+  }
+  const content = await zip.generateAsync({ type: 'blob' })
+  return content
 }

@@ -29,7 +29,7 @@
     "backToLogin": "Back to Login Page",
     "noAccountRegister": "Didn't have an account? Register",
     "processing": "Processing...",
-    "search": "Search...",
+    "search": "Search",
     "noData": "No data available in this table",
     "add": "Add",
     "sync": "Synchronize",
@@ -60,7 +60,8 @@
     "icon": "Icon",
     "time": "Time",
     "year": "Year",
-    "month": "Month"
+    "month": "Month",
+    "downloadAsZip": "Download As ZIP"
   },
   "description": {
     "forgotPassword": "Enter your registered email and we'll send you a link to reset your password.",

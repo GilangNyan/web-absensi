@@ -12,9 +12,14 @@
     <SelectForm name="year" :label="$t('tableHead.academicYear')" v-model="academicYear" :options="academicYearOptions" />
     <SelectForm name="grade" :label="$t('tableHead.grade')" v-model="grade" :options="gradeOptions" />
     <div class="flex flex-col w-full justify-end">
-      <ButtonRoundedWithIcon :label="$t('label.confirm')" type="submit" form="generate-qr-form" color="indigo">
-        <MagnifyingGlassIcon class="h-5 w-5" />
-      </ButtonRoundedWithIcon>
+      <div class="grid grid-cols-2 gap-2">
+        <ButtonRoundedWithIcon :label="$t('label.search')" type="submit" form="generate-qr-form" color="indigo">
+          <MagnifyingGlassIcon class="h-5 w-5" />
+        </ButtonRoundedWithIcon>
+        <ButtonRoundedWithIcon :label="$t('label.downloadAsZip')" color="indigo" is-reversed-color :disabled="!zippedQrImage" @click="downloadZippedQrImage()">
+          <ArchiveBoxArrowDownIcon class="h-5 w-5" />
+        </ButtonRoundedWithIcon>
+      </div>
     </div>
   </Form>
   <div class="flex w-full items-center justify-center bg-white" v-if="pdfDataUrl">
@@ -25,7 +30,7 @@
 <script setup lang="ts">
 import BreadCrumbs from '@/components/main/BreadCrumbs.vue';
 import ButtonRoundedWithIcon from '@/components/buttons/ButtonRoundedWithIcon.vue';
-import { MagnifyingGlassIcon } from '@heroicons/vue/24/solid';
+import { ArchiveBoxArrowDownIcon, MagnifyingGlassIcon } from '@heroicons/vue/24/solid';
 import { onMounted, ref, type Ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useModalStore } from '@/stores/modal';
@@ -37,7 +42,8 @@ import studentServices from '@/services/masterData/studentServices';
 import type { AxiosResponse } from 'axios';
 import * as yup from 'yup';
 import gradeServices from '@/services/masterData/gradeServices';
-import { generatePdfQrList, handleErrorResponse } from '@/utils/utilities';
+import { generatePdfQrList, generateQrImageZipped, handleErrorResponse } from '@/utils/utilities';
+import { saveAs } from 'file-saver';
 
 const lang = useI18n()
 const modalStore = useModalStore()
@@ -48,6 +54,7 @@ const gradeOptions: Ref<ISelectOption[]> = ref([])
 const academicYear: Ref<ISelectOption | null> = ref(null)
 const grade: Ref<ISelectOption | null> = ref(null)
 const pdfDataUrl: Ref<string | null> = ref(null)
+const zippedQrImage: Ref<Blob | null> = ref(null)
 
 const schema = yup.object({
   year: yup.object().shape({
@@ -73,6 +80,7 @@ const getStudent = async (): Promise<void> => {
   await studentServices.getStudent(payload).then(async (result: AxiosResponse) => {
     const datas = result.data.data.rows
     pdfDataUrl.value = await generatePdfQrList(datas)
+    zippedQrImage.value = await generateQrImageZipped(datas)
   })
 }
 
@@ -116,6 +124,11 @@ const getGrades = async (): Promise<void> => {
     handleErrorResponse(error)
     console.log(error)
   })
+}
+
+const downloadZippedQrImage = async (): Promise<void> => {
+  const academicYearNoSymbol = academicYear.value?.label.replace('/', '')
+  saveAs(zippedQrImage.value, `${academicYearNoSymbol}_${grade.value?.label}_QRCode.zip`)
 }
 
 onMounted(() => {
