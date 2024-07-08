@@ -1,4 +1,5 @@
 import i18nSetup from "@/locale/i18n"
+import { setLocale } from "@vee-validate/i18n"
 import { defineStore } from "pinia"
 
 interface LanguageState {
@@ -13,6 +14,7 @@ export const useLanguageStore = defineStore('language', {
     switchLanguage(language: string): void {
       this.lang = language
       i18nSetup.global.locale.value = this.lang as "id" | "en"
+      setLocale(this.lang)
     }
   }
 })
