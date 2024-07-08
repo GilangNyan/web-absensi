@@ -47,6 +47,10 @@ app.directive('closable', closable)
 
 // Axios
 axios.defaults.withCredentials = true
-axios.defaults.baseURL = import.meta.env.VITE_API_ENDPOINT
+if (import.meta.env.MODE == 'development') {
+  axios.defaults.baseURL = import.meta.env.VITE_API_ENDPOINT
+} else if (import.meta.env.MODE == 'production') {
+  axios.defaults.baseURL = import.meta.env.VITE_API_BASEURL + import.meta.env.VITE_API_ENDPOINT
+}
 
 app.mount('#app')
