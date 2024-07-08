@@ -41,7 +41,7 @@
         {{ $t('label.or') }}
       </span>
       <button
-        class="bg-gray-500 text-white px-3 py-2 rounded text-sm font-medium"
+        class="bg-indigo-500 text-white px-3 py-2 rounded text-sm font-medium"
         @click="triggerFileInput"
       >
         {{ $t('label.browse') }}
