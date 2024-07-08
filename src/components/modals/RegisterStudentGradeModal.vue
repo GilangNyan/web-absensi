@@ -46,6 +46,7 @@ import SelectForm from '../inputs/SelectForm.vue';
 import gradeServices from '@/services/masterData/gradeServices';
 import { useToasterStore } from '@/stores/toaster';
 import { useAuthStore } from '@/stores/auth';
+import { useModalStore } from '@/stores/modal';
 
 interface Props {
   id: string
@@ -57,6 +58,7 @@ const props = defineProps<Props>()
 
 const toast = useToasterStore()
 const auth = useAuthStore()
+const modal = useModalStore()
 
 let search: Ref<string> = ref('')
 let oldStudentsData: Ref<any[]> = ref([])
@@ -78,6 +80,7 @@ let academicYearFilter: Ref<any> = ref(null)
 // Watcher
 watch(() => destinedStudentsGroup.value.length, (newValue, oldValue) => {
   console.log(`Panjang array berubah dari ${oldValue} menjadi ${newValue}`)
+  modal.isConfirmed = false
   registerStudent()
 })
 
@@ -163,6 +166,7 @@ const registerStudent = async (): Promise<void> => {
   await gradeServices.registerStudentsGrade(payload).then((result: AxiosResponse) => {
     console.log(result)
     toast.success({ text: 'Perubahan berhasil disimpan' })
+    modal.isConfirmed = true
   }).catch((error: unknown) => {
     toast.error({ text: 'Kesalahan: ' + error })
     console.log(error)

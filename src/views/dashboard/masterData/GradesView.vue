@@ -158,6 +158,7 @@ const handleClickActions = (event: string, value: any): void => {
 }
 
 const registerStudentGrade = (data: any): void => {
+  dataStore.setStatus('U')
   modalStore.openModal({ component: RegisterStudentGradeModal, props: data })
 }
 
