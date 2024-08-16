@@ -15,10 +15,12 @@ interface IModalProps {
 interface IModalState {
   modalState: IModalProps
   isConfirmed: boolean
+  onOkCallback: (() => void) | null
+  onCancelCallback: (() => void) | null
 }
 
 export const useModalStore = defineStore('modal', {
-  state: (): IModalState => ({ modalState: basicState, isConfirmed: false }),
+  state: (): IModalState => ({ modalState: basicState, isConfirmed: false, onOkCallback: null, onCancelCallback: null }),
   actions: {
     openModal(payload: IModalProps) {
       const { props, component } = payload
@@ -43,6 +45,32 @@ export const useModalStore = defineStore('modal', {
     confirmAction() {
       this.isConfirmed = true
       this.closeModal()
+    },
+    onOk(callback?: () => void) {
+      if (callback) {
+        this.onOkCallback = callback
+      }
+      return this
+    },
+    onCancel(callback?: () => void) {
+      if (callback) {
+        this.onCancelCallback = callback
+      }
+      return this
+    },
+    okClicked() {
+      if (this.onOkCallback) {
+        this.onOkCallback()
+      }
+      this.closeModal()
+      return this
+    },
+    cancelClicked() {
+      if (this.onCancelCallback) {
+        this.onCancelCallback()
+      }
+      this.closeModal()
+      return this
     }
   },
   getters: {}
