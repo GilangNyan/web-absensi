@@ -34,8 +34,11 @@ pinia.use((context) => {
 
   // Subscribe untuk memantau perubahan
   context.store.$subscribe((mutation, state) => {
-    const encoded = base64Encode(serializer.serialize(state))
-    localStorage.setItem(storeId, encoded)
+    const decodedStoreId = base64Decode(storeId)
+    if (decodedStoreId != 'modal' && decodedStoreId != 'toaster') {
+      const encoded = base64Encode(serializer.serialize(state))
+      localStorage.setItem(storeId, encoded)
+    }
   })
 })
 
