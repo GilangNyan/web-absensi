@@ -27,8 +27,8 @@
       </slot>
     </div>
   </div>
-  <div class="relative border rounded-lg bg-white">
-    <table class="table-auto min-w-full text-sm">
+  <div class="relative border rounded-lg bg-white overflow-x-auto">
+    <table class="table-auto min-w-full text-sm overflow-x-scroll">
       <thead class="text-gray-800 font-medium text-xs border-b-2">
         <tr>
           <th scope="col" class="px-6 py-3" :class="item.name == 'actions' ? 'w-32' : ''" v-for="(item, index) in columns" :key="index">

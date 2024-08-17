@@ -1,7 +1,7 @@
 <template>
-  <div class="min-h-screen flex font-poppins bg-indigo-50">
+  <div class="min-h-screen flex w-full max-w-full overflow-hidden font-poppins bg-indigo-50">
     <SideNavbar :sidebar-open="sidebarOpen" :screen-width="screenWidth" @update="handleSidebarUpdate" />
-    <div class="flex flex-col w-full" :class="{'pl-60': sidebarOpen}">
+    <div class="flex flex-col w-full" :class="{ 'pl-60': sidebarOpen }">
       <!-- <TopNavbar :value="sidebarOpen" @update="handleSidebarUpdate" /> -->
       <TitleBar :value="sidebarOpen" @update="handleSidebarUpdate" />
       <div class="p-4 font-inter flex flex-col space-y-4">
