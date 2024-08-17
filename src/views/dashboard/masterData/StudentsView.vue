@@ -8,7 +8,7 @@
       <ButtonRoundedWithIcon color="indigo" :label="$t('label.upload')" :is-reversed-color="true" @click="openUploadStudentsModal()">
         <ArrowUpTrayIcon class="w-4 h-4" />
       </ButtonRoundedWithIcon>
-      <ButtonRoundedWithIcon color="indigo" :label="$t('label.add')">
+      <ButtonRoundedWithIcon color="indigo" :label="$t('label.add')" @click="triggerStudentFormModal('I')">
         <PlusIcon class="w-4 h-4" />
       </ButtonRoundedWithIcon>
     </template>
@@ -44,10 +44,14 @@ import ButtonRoundedWithIcon from '@/components/buttons/ButtonRoundedWithIcon.vu
 import ButtonDropdownActions from '@/components/buttons/ButtonDropdownActions.vue';
 import type IOrder from '@/types/order';
 import { useAuthStore } from '@/stores/auth';
+import StudentModal from '@/components/modals/forms/StudentModal.vue';
+import { useDataStore } from '@/stores/data';
+import type TCrudStatus from '@/types/status';
 
 const lang = useI18n()
 const modalStore = useModalStore()
 const authStore = useAuthStore()
+const dataStore = useDataStore()
 
 const columns: Ref = ref([
   {
@@ -129,7 +133,7 @@ const getData = async (): Promise<void> => {
         birthPlace: items.birthPlace,
         birthDate: items.birthDate,
         grade: grades,
-        actions: items.id
+        actions: items
       }
       rows.value.push(entry)
     })
@@ -158,7 +162,18 @@ const search = (event: string): void => {
 
 const openUploadStudentsModal = () => modalStore.openModal({ component: StudentUploadModal })
 
+const triggerStudentFormModal = (actions: TCrudStatus, data?: any): void => {
+  dataStore.setStatus(actions)
+  modalStore.openModal({ component: StudentModal, props: data })
+  modalStore.onOk(() => {
+    getData()
+  })
+}
+
 const handleClickActions = (event: string, value: any): void => {
+  if (event === 'update') {
+    triggerStudentFormModal('U', value)
+  }
   if (event === 'delete') {
     confirmationDelete(value)
   }

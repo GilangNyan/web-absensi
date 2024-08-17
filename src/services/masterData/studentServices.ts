@@ -15,5 +15,13 @@ export default {
     const config = authHeader()
     config.params = data
     return axios.get('/students/qr', config)
+  },
+  createStudents(data: any) {
+    const config = authHeader()
+    return axios.post('/students', data, config)
+  },
+  updateStudents(data: any) {
+    const config = authHeader()
+    return axios.put('/students', data, config)
   }
 }
