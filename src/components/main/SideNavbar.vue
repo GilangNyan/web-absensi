@@ -1,5 +1,5 @@
 <template>
-  <div :class="props.sidebarOpen && props.screenWidth <= 640 ? 'absolute flex w-full h-screen' : 'flex w-fit h-screen'">
+  <div :class="props.sidebarOpen && props.screenWidth <= 640 ? 'absolute flex w-full h-screen' : 'flex w-fit h-screen fixed'">
     <Transition name="slide-left">
       <aside
         class="bg-indigo-600 w-60 h-screen shadow-sm pl-2 overflow-y-auto"
