@@ -103,7 +103,7 @@ export const boolStatus = (status: boolean): string => {
 export const formatFullDate = (date: string): string => {
   const languageStore = useLanguageStore()
   const language = languageStore.lang
-  const dt = DateTime.fromISO(date).setLocale(language).toLocaleString(DateTime.DATE_HUGE)
+  const dt = DateTime.fromISO(date).setLocale((language as string)).toLocaleString(DateTime.DATE_HUGE)
   return dt
 }
 
