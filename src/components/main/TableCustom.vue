@@ -1,7 +1,7 @@
 <template>
   <div class="flex justify-between items-center text-xs">
     <div class="flex items-center space-x-2">
-      <div class="flex items-center">
+      <div class="flex items-center" v-if="!hideSearch">
         <div class="p-2 bg-white border-l border-y border-gray-200 rounded-l-full">
           <MagnifyingGlassIcon class="w-4 h-4 text-indigo-600" />
         </div>
@@ -31,7 +31,14 @@
     <table class="table-auto min-w-full text-sm overflow-x-scroll">
       <thead class="text-gray-800 font-medium text-xs border-b-2">
         <tr>
-          <th scope="col" class="px-6 py-3" :class="item.name == 'actions' ? 'w-32' : ''" v-for="(item, index) in columns" :key="index">
+          <th 
+            scope="col"
+            class="px-6 py-3"
+            :class="item.name == 'actions' ? 'w-32' : ''"
+            v-for="(item, index) in columns" :key="index"
+            :colspan="item.colspan || 1"
+            :rowspan="item.rowspan || 1"
+          >
             <span class="flex items-center justify-center space-x-1">
               <span>{{ item.title }}</span>
               <BarsArrowDownIcon
@@ -94,6 +101,8 @@ interface Fields {
   name: string
   title: string
   sortable?: boolean
+  colspan?: number
+  rowspan?: number
 }
 
 interface Props {
@@ -102,9 +111,12 @@ interface Props {
   currentPage?: number
   perPage?: number
   sort?: IOrder
+  hideSearch?: boolean
 }
 
-const props = defineProps<Props>()
+const props = withDefaults(defineProps<Props>(), {
+  hideSearch: false
+})
 const emits = defineEmits<{
   search: [entry: string],
   order: [value: IOrder]

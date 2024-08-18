@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col">
+  <div class="flex flex-col space-y-4">
     <h1 class="font-bold text-indigo-900 text-2xl">{{ $t('title.monthlyAttendance') }}</h1>
     <BreadCrumbs />
   </div>
@@ -15,27 +15,36 @@
       <SelectForm name="grade" :label="$t('tableHead.grade')" v-model="grade" :options="gradeOptions" />
     </div>
     <div class="flex items-center justify-end">
-      <ButtonRoundedWithIcon :label="$t('label.confirm')" type="submit" form="monthly-attendance-form" color="indigo">
+      <ButtonRoundedWithIcon :label="$t('label.confirm')" type="submit" form="monthly-attendance-form" color="indigo" :loading="isBusy">
         <MagnifyingGlassIcon class="w-5 h-5" />
       </ButtonRoundedWithIcon>
     </div>
   </Form>
+  <div class="bg-white p-4 rounded-lg flex flex-col space-y-2" v-if="isReportGenerated">
+    <TableCustom :columns="columns" :rows="rows" hide-search>
+      <!--  -->
+    </TableCustom>
+  </div>
 </template>
 
 <script setup lang="ts">
 import ButtonRoundedWithIcon from '@/components/buttons/ButtonRoundedWithIcon.vue';
 import SelectForm from '@/components/inputs/SelectForm.vue';
 import BreadCrumbs from '@/components/main/BreadCrumbs.vue';
+import TableCustom from '@/components/main/TableCustom.vue';
 import timeConstants from '@/constants/timeConstants';
 import attendanceServices from '@/services/masterData/attendanceServices';
 import gradeServices from '@/services/masterData/gradeServices';
 import type ISelectOption from '@/types/selectOption';
-import { handleErrorResponse } from '@/utils/utilities';
+import { getTotalDaysByMonth, handleErrorResponse } from '@/utils/utilities';
 import { MagnifyingGlassIcon } from '@heroicons/vue/24/solid';
 import type { AxiosResponse } from 'axios';
 import { Form } from 'vee-validate';
 import { onMounted, ref, type Ref } from 'vue';
+import { useI18n } from 'vue-i18n';
 import * as yup from 'yup';
+
+const { t } = useI18n()
 
 const yearOptions: Ref<ISelectOption[]> = ref([])
 const monthOptions: Ref<ISelectOption[]> = ref([])
@@ -58,6 +67,36 @@ const schema = yup.object({
     value: yup.string()
   }).required()
 })
+
+const columns: Ref = ref([
+  {
+    name: 'name',
+    title: t('tableHead.name')
+  },
+  {
+    name: 'nisn',
+    title: t('tableHead.nisn')
+  },
+  {
+    name: 'hadir',
+    title: 'Hadir'
+  },
+  {
+    name: 'sakit',
+    title: 'Sakit'
+  },
+  {
+    name: 'izin',
+    title: 'Izin'
+  },
+  {
+    name: 'alpa',
+    title: 'Alpa'
+  },
+])
+const rows: Ref = ref([])
+const isBusy: Ref<boolean> = ref(false)
+const isReportGenerated: Ref<boolean> = ref(false)
 
 const getYears = (): void => {
   const d = new Date
@@ -90,7 +129,6 @@ const getGrades = async (): Promise<void> => {
     })
   }).catch((error: unknown) => {
     handleErrorResponse(error)
-    console.log(error)
   })
 }
 
@@ -100,15 +138,28 @@ const getData = async (): Promise<void> => {
     month: month.value?.value,
     grade: grade.value?.value
   }
+  isBusy.value = true
+  rows.value = []
   await attendanceServices.getMonthlyAttendance(payload).then((result: AxiosResponse) => {
     const datas = result.data.data.rows
-    console.log(result)
-    // datas.forEach((item: any) => {
-    //   console.log(item)
-    // })
+    const dayOff: number = result.data.data.dayOff
+    const weekdays: number = getTotalDaysByMonth((year.value?.value as number), (month.value?.value as number)) - dayOff
+    datas.forEach((item: any) => {
+      const entry = {
+        name: item.fullname,
+        nisn: item.nisn,
+        hadir: item.attendance ? item.attendance.hadir : 0,
+        sakit: item.attendance ? item.attendance.sakit : 0,
+        izin: item.attendance ? item.attendance.izin : 0,
+        alpa: item.attendance ? weekdays - (item.attendance.hadir + item.attendance.sakit + item.attendance.izin) : 0 + weekdays,
+      }
+      rows.value.push(entry)
+    })
   }).catch((error: unknown) => {
     handleErrorResponse(error)
-    console.log(error)
+  }).finally(() => {
+    isReportGenerated.value = true
+    isBusy.value = false
   })
 }
 

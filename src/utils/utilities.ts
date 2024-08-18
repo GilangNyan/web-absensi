@@ -199,3 +199,14 @@ export const generateQrImageZipped = async (datum: any[]): Promise<Blob> => {
   const content = await zip.generateAsync({ type: 'blob' })
   return content
 }
+
+export const getTotalDaysByMonth = (year: number, month: number): number => {
+  const startDate = new Date(year, month - 1, 1)
+  const endDate = new Date(year, month, 0)
+
+  const timeDiff = endDate.getTime() - startDate.getTime()
+
+  const dayDiff = timeDiff / (1000 * 3600 * 24)
+
+  return dayDiff + 1
+}
