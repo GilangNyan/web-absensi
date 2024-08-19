@@ -61,7 +61,10 @@
     "time": "Waktu",
     "year": "Tahun",
     "month": "Bulan",
-    "downloadAsZip": "Unduh Sebagai ZIP"
+    "downloadAsZip": "Unduh Sebagai ZIP",
+    "profile": "Profil",
+    "oldPassword": "Kata Sandi Lama",
+    "newPassword": "Kata Sandi Baru"
   },
   "description": {
     "forgotPassword": "Masukkan alamat email terdaftar Anda dan kami akan mengirimkan tautan untuk mengubah kata sandi Anda.",
@@ -71,7 +74,9 @@
   "validation": {
     "required": "{field} harus diisi",
     "columnNotFound": "Kolom {column} tidak ditemukan",
-    "allValid": "Semua data yang dikirimkan sudah benar"
+    "allValid": "Semua data yang dikirimkan sudah benar",
+    "password": "Kata sandi setidaknya harus memiliki huruf kapital, huruf kecil, angka, dan simbol",
+    "confirmPassword": "Kata sandi tidak cocok"
   },
   "title": {
     "studentsData": "Data Siswa",
@@ -82,7 +87,11 @@
     "submenuMaintenance": "Kelola Submenu",
     "systemParameters": "Parameter Sistem",
     "generateQr": "Generate Kode QR",
-    "monthlyAttendance": "Rekap Absensi Bulanan"
+    "dailyAttendance": "Rekap Absensi Harian",
+    "monthlyAttendance": "Rekap Absensi Bulanan",
+    "semesterAttendance": "Rekap Absensi Semester",
+    "userProfile": "Profil Pengguna",
+    "changePassword": "Ganti Kata Sandi"
   },
   "tableHead": {
     "name": "Nama",

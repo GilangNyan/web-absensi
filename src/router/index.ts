@@ -13,6 +13,9 @@ import SystemParametersView from '@/views/dashboard/options/SystemParametersView
 import PresenceQrScanView from '@/views/landing/PresenceQrScanView.vue'
 import GenerateQrCodeView from '@/views/dashboard/GenerateQrCodeView.vue'
 import MonthlyAttendanceView from '@/views/dashboard/reports/MonthlyAttendanceView.vue'
+import DailyAttendanceView from '@/views/dashboard/reports/DailyAttendanceView.vue'
+import SemesterAttendanceView from '@/views/dashboard/reports/SemesterAttendanceView.vue'
+import ProfileView from '@/views/dashboard/ProfileView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -146,9 +149,36 @@ const router = createRouter({
       }
     },
     {
+      path: '/reports/daily-attendance',
+      name: 'dailyAttendance',
+      component: DailyAttendanceView,
+      meta: {
+        layout: 'MainLayout',
+        requiresAuth: true
+      }
+    },
+    {
       path: '/reports/monthly-attendance',
       name: 'monthlyAttendance',
       component: MonthlyAttendanceView,
+      meta: {
+        layout: 'MainLayout',
+        requiresAuth: true
+      }
+    },
+    {
+      path: '/reports/semester-attendance',
+      name: 'semesterAttendance',
+      component: SemesterAttendanceView,
+      meta: {
+        layout: 'MainLayout',
+        requiresAuth: true
+      }
+    },
+    {
+      path: '/profile',
+      name: 'UserProfile',
+      component: ProfileView,
       meta: {
         layout: 'MainLayout',
         requiresAuth: true

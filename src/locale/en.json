@@ -61,7 +61,10 @@
     "time": "Time",
     "year": "Year",
     "month": "Month",
-    "downloadAsZip": "Download As ZIP"
+    "downloadAsZip": "Download As ZIP",
+    "profile": "Profile",
+    "oldPassword": "Old Password",
+    "newPassword": "New Password"
   },
   "description": {
     "forgotPassword": "Enter your registered email and we'll send you a link to reset your password.",
@@ -71,7 +74,9 @@
   "validation": {
     "required": "{field} is required",
     "columnNotFound": "Column {column} is not found",
-    "allValid": "All submitted data is valid"
+    "allValid": "All submitted data is valid",
+    "password": "Password must contains atleast one uppercase letter, lowercase letter, numbers, and symbols",
+    "confirmPassword": "Password doesn't match"
   },
   "title": {
     "studentsData": "Students Data",
@@ -82,7 +87,11 @@
     "submenuMaintenance": "Submenu Maintenance",
     "systemParameters": "System Parameters",
     "generateQr": "Generate QR Codes",
-    "monthlyAttendance": "Monthly Attendance Reports"
+    "dailyAttendance": "Daily Attendance Reports",
+    "monthlyAttendance": "Monthly Attendance Reports",
+    "semesterAttendance": "Semester Attendance Reports",
+    "userProfile": "User Profile",
+    "changePassword": "Change Password"
   },
   "tableHead": {
     "name": "Name",

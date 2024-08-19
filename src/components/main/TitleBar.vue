@@ -23,10 +23,10 @@
           class="absolute top-10 right-0 z-30 bg-white border border-gray-200 shadow-lg rounded-lg text-sm min-w-48"
           v-if="toggleUserDropdown"
         >
-          <div class="dropdown-item">
+          <RouterLink to="/profile" class="dropdown-item">
             <UserIcon class="w-4 h-4" />
-            <span>{{ $t('label.account') }}</span>
-          </div>
+            <span>{{ $t('label.profile') }}</span>
+          </RouterLink>
           <div class="dropdown-item">
             <BellIcon class="w-4 h-4" />
             <span>{{ $t('label.notifications') }}</span>

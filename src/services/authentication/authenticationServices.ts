@@ -8,5 +8,9 @@ export default {
   logout(data: any) {
     const config = authHeader()
     return axios.post('/logout', data, config)
+  },
+  changePassword(data: any) {
+    const config = authHeader()
+    return axios.post('/change-password', data, config)
   }
 }
