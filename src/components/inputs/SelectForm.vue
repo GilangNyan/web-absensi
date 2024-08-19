@@ -68,7 +68,7 @@ const toggleOptions = (): void => {
 }
 
 .options-wrapper {
-  @apply text-sm text-gray-800 rounded-lg border border-gray-200 shadow-md cursor-pointer absolute z-10 w-full bg-white
+  @apply text-sm text-gray-800 rounded-lg border border-gray-200 shadow-md cursor-pointer absolute z-10 w-full bg-white max-h-[70vh] overflow-y-auto
 }
 
 .option {
