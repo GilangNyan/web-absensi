@@ -119,7 +119,8 @@
     "logout": "Sukses Logout",
     "save": "Sukses menyimpan data dengan nama {name}",
     "delete": "Sukses menghapus data dengan nama {name}",
-    "recordAttendance": "Berhasil mencatat kehadiran"
+    "recordAttendance": "Berhasil mencatat kehadiran",
+    "changePassword": "Kata sandi berhasil diganti. Silahkan login ulang"
   },
   "warning": {
     "warning": "Peringatan",
@@ -128,7 +129,8 @@
   },
   "error": {
     "error": "Kesalahan",
-    "forbiddenAttendanceHoliday": "Absensi Tidak Dapat Dilakukan Pada Hari Libur"
+    "forbiddenAttendanceHoliday": "Absensi Tidak Dapat Dilakukan Pada Hari Libur",
+    "oldPasswordDoesntMatch": "Password lama tidak cocok"
   },
   "active": "Aktif",
   "inactive": "Nonaktif"

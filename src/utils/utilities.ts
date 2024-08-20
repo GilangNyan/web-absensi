@@ -40,6 +40,8 @@ export const handleErrorResponse = (error: any) => {
       toasterStore.warning({ text: lang.global.t('warning.warning'), message: lang.global.t('warning.sessionExpired') })
     } else if (error.response.data.error.errors == 'ForbiddenAttendanceError') {
       toasterStore.warning({ text: lang.global.t('warning.warning'), message: lang.global.t('error.forbiddenAttendanceHoliday') })
+    } else if (error.response.data.error.message == 'Old Password doesn\'t match') {
+      toasterStore.error({ text: 'Error!', message: lang.global.t('error.oldPasswordDoesntMatch') })
     }
   } else {
     toasterStore.error({ text: 'Error!', message: error.message })

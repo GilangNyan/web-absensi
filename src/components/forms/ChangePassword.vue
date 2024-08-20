@@ -26,8 +26,13 @@ import InputForm from '../inputs/InputForm.vue';
 import { PencilSquareIcon } from '@heroicons/vue/24/solid';
 import authenticationServices from '@/services/authentication/authenticationServices';
 import { handleErrorResponse } from '@/utils/utilities';
+import { useAuthStore } from '@/stores/auth';
+import router from '@/router';
+import { useToasterStore } from '@/stores/toaster';
 
 const { t } = useI18n()
+const auth = useAuthStore()
+const toast = useToasterStore()
 
 const isBusy: Ref<boolean> = ref(false)
 
@@ -36,8 +41,8 @@ const newPassword: Ref<string> = ref('')
 const confirmPassword: Ref<string> = ref('')
 
 const schema = yup.object({
-  oldPassword: yup.string().min(8).max(12).required(),
-  newPassword: yup.string().min(8).max(12).test('isValidPass', t('validation.password'), (value, context) => {
+  oldPassword: yup.string().min(8).max(14).required(),
+  newPassword: yup.string().min(8).max(14).test('isValidPass', t('validation.password'), (value, context) => {
     const hasUpperCase = /[A-Z]/.test(value!)
     const hasLowerCase = /[a-z]/.test(value!)
     const hasNumber = /[0-9]/.test(value!)
@@ -63,7 +68,9 @@ const submit = async (): Promise<void> => {
   }
   isBusy.value = true
   await authenticationServices.changePassword(payload).then((result) => {
-    // 
+    auth.clearCredentials()
+    router.push('/login')
+    toast.success({ text: t('success.changePassword') })
   }).catch((error) => {
     handleErrorResponse(error)
   }).finally(() => {

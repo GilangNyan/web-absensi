@@ -119,7 +119,8 @@
     "logout": "Logout Success",
     "save": "Success saving data with name {name}",
     "delete": "Success deleting data with name {name}",
-    "recordAttendance": "Attendance recorded successfully"
+    "recordAttendance": "Attendance recorded successfully",
+    "changePassword": "Password changed. Please re-login"
   },
   "warning": {
     "warning": "Warning",
@@ -128,7 +129,8 @@
   },
   "error": {
     "error": "Error",
-    "forbiddenAttendanceHoliday": "Cannot Record Attendance on Holiday"
+    "forbiddenAttendanceHoliday": "Cannot Record Attendance on Holiday",
+    "oldPasswordDoesntMatch": "Old password doesn't match"
   },
   "active": "Active",
   "inactive": "Inactive"
