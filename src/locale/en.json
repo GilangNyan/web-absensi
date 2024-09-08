@@ -64,7 +64,8 @@
     "downloadAsZip": "Download As ZIP",
     "profile": "Profile",
     "oldPassword": "Old Password",
-    "newPassword": "New Password"
+    "newPassword": "New Password",
+    "role": "Role"
   },
   "description": {
     "forgotPassword": "Enter your registered email and we'll send you a link to reset your password.",
@@ -91,7 +92,10 @@
     "monthlyAttendance": "Monthly Attendance Reports",
     "semesterAttendance": "Semester Attendance Reports",
     "userProfile": "User Profile",
-    "changePassword": "Change Password"
+    "changePassword": "Change Password",
+    "manageUser": "Manage Users",
+    "manageRoles": "Manage Roles",
+    "userData": "User Data"
   },
   "tableHead": {
     "name": "Name",

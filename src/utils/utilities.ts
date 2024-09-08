@@ -102,6 +102,18 @@ export const boolStatus = (status: boolean): string => {
   }
 }
 
+export const charStatus = (status: string): string => {
+  const lang = i18nSetup
+  switch (status) {
+    case 'A':
+      return lang.global.t('active')
+    case 'I':
+      return lang.global.t('inactive')
+    default:
+      return 'Invalid'
+  }
+}
+
 export const formatFullDate = (date: string): string => {
   const languageStore = useLanguageStore()
   const language = languageStore.lang

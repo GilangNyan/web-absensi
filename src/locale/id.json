@@ -64,7 +64,8 @@
     "downloadAsZip": "Unduh Sebagai ZIP",
     "profile": "Profil",
     "oldPassword": "Kata Sandi Lama",
-    "newPassword": "Kata Sandi Baru"
+    "newPassword": "Kata Sandi Baru",
+    "role": "Hak Akses"
   },
   "description": {
     "forgotPassword": "Masukkan alamat email terdaftar Anda dan kami akan mengirimkan tautan untuk mengubah kata sandi Anda.",
@@ -91,7 +92,10 @@
     "monthlyAttendance": "Rekap Absensi Bulanan",
     "semesterAttendance": "Rekap Absensi Semester",
     "userProfile": "Profil Pengguna",
-    "changePassword": "Ganti Kata Sandi"
+    "changePassword": "Ganti Kata Sandi",
+    "manageUser": "Kelola Pengguna",
+    "manageRoles": "Kelola Hak Akses",
+    "userData": "Data Pengguna"
   },
   "tableHead": {
     "name": "Nama",

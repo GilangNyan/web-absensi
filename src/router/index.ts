@@ -16,6 +16,8 @@ import MonthlyAttendanceView from '@/views/dashboard/reports/MonthlyAttendanceVi
 import DailyAttendanceView from '@/views/dashboard/reports/DailyAttendanceView.vue'
 import SemesterAttendanceView from '@/views/dashboard/reports/SemesterAttendanceView.vue'
 import ProfileView from '@/views/dashboard/ProfileView.vue'
+import ManageUserView from '@/views/dashboard/user/ManageUserView.vue'
+import ManageRolesView from '@/views/dashboard/user/ManageRolesView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -170,6 +172,24 @@ const router = createRouter({
       path: '/reports/semester-attendance',
       name: 'semesterAttendance',
       component: SemesterAttendanceView,
+      meta: {
+        layout: 'MainLayout',
+        requiresAuth: true
+      }
+    },
+    {
+      path: '/user-management/user',
+      name: 'ManageUser',
+      component: ManageUserView,
+      meta: {
+        layout: 'MainLayout',
+        requiresAuth: true
+      }
+    },
+    {
+      path: '/user-management/roles',
+      name: 'ManageRoles',
+      component: ManageRolesView,
       meta: {
         layout: 'MainLayout',
         requiresAuth: true
