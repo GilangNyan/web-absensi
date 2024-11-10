@@ -10,7 +10,7 @@
     @submit="getData()"
   >
     <div class="grid grid-cols-3 gap-2">
-      <SelectForm name="year" :label="$t('label.year')" v-model="year" :options="yearOptions" />
+      <SelectForm name="year" :label="$t('tableHead.academicYear')" v-model="year" :options="yearOptions" />
       <SelectForm name="month" :label="$t('label.month')" v-model="month" :options="monthOptions" />
       <SelectForm name="grade" :label="$t('tableHead.grade')" v-model="grade" :options="gradeOptions" />
     </div>
@@ -21,6 +21,11 @@
     </div>
   </Form>
   <div class="bg-white p-4 rounded-lg flex flex-col space-y-2" v-if="isReportGenerated">
+    <div class="flex w-full justify-end items-center">
+      <ButtonRoundedWithIcon color="indigo" type="button" :label="$t('label.downloadReports')" @click="downloadReports()">
+        <DocumentArrowDownIcon class="w-5 h-5" />
+      </ButtonRoundedWithIcon>
+    </div>
     <TableCustom :columns="columns" :rows="rows" hide-search>
       <!--  -->
     </TableCustom>
@@ -37,7 +42,7 @@ import attendanceServices from '@/services/masterData/attendanceServices';
 import gradeServices from '@/services/masterData/gradeServices';
 import type ISelectOption from '@/types/selectOption';
 import { getTotalDaysByMonth, handleErrorResponse } from '@/utils/utilities';
-import { MagnifyingGlassIcon } from '@heroicons/vue/24/solid';
+import { DocumentArrowDownIcon, MagnifyingGlassIcon } from '@heroicons/vue/24/solid';
 import type { AxiosResponse } from 'axios';
 import { Form } from 'vee-validate';
 import { onMounted, ref, type Ref } from 'vue';
@@ -112,6 +117,22 @@ const getYears = (): void => {
   }
 }
 
+const getAcademicYears = async (): Promise<void> => {
+  const payload = {}
+  await gradeServices.getAcademicYears(payload).then((result: AxiosResponse) => {
+    const datas = result.data.data.rows
+    datas.forEach((item: any) => {
+      const entry = {
+        value: item.id,
+        label: item.name
+      }
+      yearOptions.value.push(entry)
+    })
+  }).catch((error: unknown) => {
+    handleErrorResponse(error)
+  })
+}
+
 const getGrades = async (): Promise<void> => {
   const payload = {
     page: 1,
@@ -143,15 +164,16 @@ const getData = async (): Promise<void> => {
   await attendanceServices.getMonthlyAttendance(payload).then((result: AxiosResponse) => {
     const datas = result.data.data.rows
     const dayOff: number = result.data.data.dayOff
-    const weekdays: number = getTotalDaysByMonth((year.value?.value as number), (month.value?.value as number)) - dayOff
+    const years: number = result.data.data.year
+    const weekdays: number = getTotalDaysByMonth(years, (month.value?.value as number)) - dayOff
     datas.forEach((item: any) => {
       const entry = {
         name: item.fullname,
         nisn: item.nisn,
-        hadir: item.attendance ? item.attendance.hadir : 0,
-        sakit: item.attendance ? item.attendance.sakit : 0,
-        izin: item.attendance ? item.attendance.izin : 0,
-        alpa: item.attendance ? weekdays - (item.attendance.hadir + item.attendance.sakit + item.attendance.izin) : 0 + weekdays,
+        hadir: item.attendances ? parseInt(item.attendances.hadir) : 0,
+        sakit: item.attendances ? parseInt(item.attendances.sakit) : 0,
+        izin: item.attendances ? parseInt(item.attendances.izin) : 0,
+        alpa: item.attendances ? weekdays - (parseInt(item.attendances.hadir) + parseInt(item.attendances.sakit) + parseInt(item.attendances.izin)) : 0 + weekdays,
       }
       rows.value.push(entry)
     })
@@ -163,8 +185,37 @@ const getData = async (): Promise<void> => {
   })
 }
 
+const downloadReports = async () => {
+  const payload = {
+    year: year.value?.value,
+    month: month.value?.value,
+    grade: grade.value?.value
+  }
+  await attendanceServices.downloadMonthlyAttendance(payload).then((result: AxiosResponse) => {
+    const url = window.URL.createObjectURL(result.data);
+    const link = document.createElement('a');
+    let filename = 'download.xlsx'
+    const disposition = result.headers['content-disposition']
+    if (disposition && disposition.indexOf('attachment') !== -1) {
+      let filenameRegex = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/;
+      let matches = filenameRegex.exec(disposition);
+      if (matches != null && matches[1]) { 
+        filename = matches[1].replace(/['"]/g, '');
+      }
+    }
+    link.href = url;
+    link.setAttribute('download', filename);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+
+  })
+}
+
 onMounted(() => {
-  getYears()
+  // getYears()
+  getAcademicYears()
   monthOptions.value = timeConstants.monthOptions
   getGrades()
 })

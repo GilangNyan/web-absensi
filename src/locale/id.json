@@ -65,7 +65,8 @@
     "profile": "Profil",
     "oldPassword": "Kata Sandi Lama",
     "newPassword": "Kata Sandi Baru",
-    "role": "Hak Akses"
+    "role": "Hak Akses",
+    "downloadReports": "Unduh Laporan"
   },
   "description": {
     "forgotPassword": "Masukkan alamat email terdaftar Anda dan kami akan mengirimkan tautan untuk mengubah kata sandi Anda.",
