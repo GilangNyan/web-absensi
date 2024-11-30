@@ -66,7 +66,7 @@
     "oldPassword": "Old Password",
     "newPassword": "New Password",
     "role": "Role",
-    "downloadReports": "Download Reports"
+    "downloadReports": "Download {type} Reports"
   },
   "description": {
     "forgotPassword": "Enter your registered email and we'll send you a link to reset your password.",

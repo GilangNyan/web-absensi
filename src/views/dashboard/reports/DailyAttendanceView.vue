@@ -20,8 +20,11 @@
     </div>
   </Form>
   <div class="bg-white p-4 rounded-lg flex flex-col space-y-2" v-if="isReportGenerated">
-    <div class="flex w-full justify-end items-center">
-      <ButtonRoundedWithIcon color="indigo" type="button" :label="$t('label.downloadReports')" @click="downloadReports()">
+    <div class="flex w-full justify-end items-center space-x-2">
+      <ButtonRoundedWithIcon color="indigo" type="button" :label="$t('label.downloadReports', { type: 'PDF' })" @click="downloadReports('pdf')" :loading="downloadPdfLoading" :disabled="downloadPdfLoading">
+        <DocumentArrowDownIcon class="w-5 h-5" />
+      </ButtonRoundedWithIcon>
+      <ButtonRoundedWithIcon color="indigo" type="button" :label="$t('label.downloadReports', { type: 'Excel' })" @click="downloadReports('xlsx')" :loading="downloadXlsxLoading" :disabled="downloadXlsxLoading">
         <DocumentArrowDownIcon class="w-5 h-5" />
       </ButtonRoundedWithIcon>
     </div>
@@ -51,6 +54,8 @@ import * as yup from 'yup';
 const { t } = useI18n()
 const isBusy: Ref<boolean> = ref(false)
 const isReportGenerated: Ref<boolean> = ref(false)
+const downloadXlsxLoading: Ref<boolean> = ref(false)
+const downloadPdfLoading: Ref<boolean> = ref(false)
 
 const gradeOptions: Ref<ISelectOption[]> = ref([])
 const grade: Ref<ISelectOption | null> = ref(null)
@@ -143,15 +148,18 @@ const getData = async (): Promise<void> => {
   })
 }
 
-const downloadReports = async () => {
+const downloadReports = async (fileType: string) => {
   const payload = {
     date: date.value,
-    grade: grade.value?.value
+    grade: grade.value?.value,
+    type: fileType
   }
+  if (fileType == 'xlsx') downloadXlsxLoading.value = true
+  if (fileType == 'pdf') downloadPdfLoading.value = true
   await attendanceServices.downloadDailyAttendance(payload).then((result: AxiosResponse) => {
     const url = window.URL.createObjectURL(result.data);
     const link = document.createElement('a');
-    let filename = 'download.xlsx'
+    let filename = `download.${fileType}`
     const disposition = result.headers['content-disposition']
     if (disposition && disposition.indexOf('attachment') !== -1) {
       let filenameRegex = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/;
@@ -166,7 +174,11 @@ const downloadReports = async () => {
     link.click();
     document.body.removeChild(link);
     URL.revokeObjectURL(url);
-
+  }).catch((error: unknown) => {
+    handleErrorResponse(error)
+  }).finally(() => {
+    downloadXlsxLoading.value = false
+    downloadPdfLoading.value = false
   })
 }
 
