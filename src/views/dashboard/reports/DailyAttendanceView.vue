@@ -21,8 +21,8 @@
   </Form>
   <div class="bg-white p-4 rounded-lg flex flex-col space-y-2" v-if="isReportGenerated">
     <div class="flex w-full justify-end items-center space-x-2">
-      <ButtonRoundedWithIcon color="indigo" type="button" :label="$t('label.downloadReports', { type: 'PDF' })" @click="downloadReports('pdf')" :loading="downloadPdfLoading" :disabled="downloadPdfLoading">
-        <DocumentArrowDownIcon class="w-5 h-5" />
+      <ButtonRoundedWithIcon color="indigo" type="button" :label="$t('label.print')" @click="generateReports()" :loading="downloadPdfLoading" :disabled="downloadPdfLoading">
+        <PrinterIcon class="w-5 h-5" />
       </ButtonRoundedWithIcon>
       <ButtonRoundedWithIcon color="indigo" type="button" :label="$t('label.downloadReports', { type: 'Excel' })" @click="downloadReports('xlsx')" :loading="downloadXlsxLoading" :disabled="downloadXlsxLoading">
         <DocumentArrowDownIcon class="w-5 h-5" />
@@ -40,22 +40,34 @@ import InputForm from '@/components/inputs/InputForm.vue';
 import SelectForm from '@/components/inputs/SelectForm.vue';
 import BreadCrumbs from '@/components/main/BreadCrumbs.vue';
 import TableCustom from '@/components/main/TableCustom.vue';
+import PrintPreviewModal from '@/components/modals/PrintPreviewModal.vue';
 import attendanceServices from '@/services/masterData/attendanceServices';
 import gradeServices from '@/services/masterData/gradeServices';
+import { useModalStore } from '@/stores/modal';
 import type ISelectOption from '@/types/selectOption';
-import { handleErrorResponse } from '@/utils/utilities';
-import { DocumentArrowDownIcon, MagnifyingGlassIcon } from '@heroicons/vue/24/solid';
+import { formatFullDate, handleErrorResponse } from '@/utils/utilities';
+import { DocumentArrowDownIcon, MagnifyingGlassIcon, PrinterIcon } from '@heroicons/vue/24/solid';
 import type { AxiosResponse } from 'axios';
 import { Form } from 'vee-validate';
-import { onMounted, ref, type Ref } from 'vue';
+import { onMounted, reactive, ref, type Ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import * as yup from 'yup';
 
 const { t } = useI18n()
+const modal = useModalStore()
 const isBusy: Ref<boolean> = ref(false)
 const isReportGenerated: Ref<boolean> = ref(false)
 const downloadXlsxLoading: Ref<boolean> = ref(false)
 const downloadPdfLoading: Ref<boolean> = ref(false)
+const htmlTemplate: Ref = ref('')
+const htmlData: Ref = ref('')
+const reportSummary = reactive({
+  total: 0,
+  hadir: 0,
+  sakit: 0,
+  izin: 0,
+  alpa: 0
+})
 
 const gradeOptions: Ref<ISelectOption[]> = ref([])
 const grade: Ref<ISelectOption | null> = ref(null)
@@ -145,6 +157,62 @@ const getData = async (): Promise<void> => {
   }).finally(() => {
     isBusy.value = false
     isReportGenerated.value = true
+  })
+}
+
+const generateReports = async () => {
+  downloadPdfLoading.value = true
+  const response = await fetch('/daily-attendance.html')
+  htmlTemplate.value = await response.text()
+  await populateReports()
+  htmlTemplate.value = htmlTemplate.value.replace('<tbody></tbody>', `<tbody>${htmlData.value}</tbody>`)
+  htmlTemplate.value = htmlTemplate.value.replace('<td id="date"></td>', `<td id="date">${formatFullDate(date.value!)}</td>`)
+  htmlTemplate.value = htmlTemplate.value.replace('<td id="grade"></td>', `<td id="grade">${grade.value?.label}</td>`)
+  htmlTemplate.value = htmlTemplate.value.replace('<td id="total"></td>', `<td id="total">${reportSummary.total}</td>`)
+  htmlTemplate.value = htmlTemplate.value.replace('<td id="hadir"></td>', `<td id="hadir">${reportSummary.hadir}</td>`)
+  htmlTemplate.value = htmlTemplate.value.replace('<td id="sakit"></td>', `<td id="sakit">${reportSummary.sakit}</td>`)
+  htmlTemplate.value = htmlTemplate.value.replace('<td id="izin"></td>', `<td id="izin">${reportSummary.izin}</td>`)
+  htmlTemplate.value = htmlTemplate.value.replace('<td id="alpa"></td>', `<td id="alpa">${reportSummary.alpa}</td>`)
+  modal.openModal({ component: PrintPreviewModal, props: { content: htmlTemplate.value } })
+  downloadPdfLoading.value = false
+}
+
+const populateReports = async () => {
+  const payload = {
+    date: date.value,
+    grade: grade.value?.value
+  }
+  htmlData.value = ''
+  reportSummary.total = 0
+  reportSummary.hadir = 0
+  reportSummary.sakit = 0
+  reportSummary.izin = 0
+  reportSummary.alpa = 0
+  await attendanceServices.getDailyAttendance(payload).then((result: AxiosResponse) => {
+    const datas = result.data.data
+    for (const [index, item] of datas.entries()) {
+      const hadir = item.attendances.filter((item: any) => item.status == 'H').length
+      const izin = item.attendances.filter((item: any) => item.status == 'I').length
+      const sakit = item.attendances.filter((item: any) => item.status == 'S').length
+      const alpa = item.attendances.filter((item: any) => item.status == 'A').length != 0 || (hadir == 0 && sakit == 0 && izin == 0) ? 1 : 0
+      const entry = `<tr>
+      <td class="center">${index + 1}</td>
+      <td>${item.fullname}</td>
+      <td class="center">${grade.value?.label}</td>
+      <td class="center">${hadir}</td>
+      <td class="center">${sakit}</td>
+      <td class="center">${izin}</td>
+      <td class="center">${alpa}</td>
+      </tr>`
+      htmlData.value = htmlData.value + entry
+      reportSummary.total += 1
+      reportSummary.hadir += hadir
+      reportSummary.sakit += sakit
+      reportSummary.izin += izin
+      reportSummary.alpa += alpa
+    }
+  }).catch((error) => {
+    handleErrorResponse(error)
   })
 }
 
