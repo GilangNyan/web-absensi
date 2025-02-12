@@ -68,6 +68,7 @@ const reportSummary = reactive({
   izin: 0,
   alpa: 0
 })
+const academicYear: Ref<string> = ref('')
 
 const gradeOptions: Ref<ISelectOption[]> = ref([])
 const grade: Ref<ISelectOption | null> = ref(null)
@@ -168,6 +169,7 @@ const generateReports = async () => {
   htmlTemplate.value = htmlTemplate.value.replace('<tbody></tbody>', `<tbody>${htmlData.value}</tbody>`)
   htmlTemplate.value = htmlTemplate.value.replace('<td id="date"></td>', `<td id="date">${formatFullDate(date.value!)}</td>`)
   htmlTemplate.value = htmlTemplate.value.replace('<td id="grade"></td>', `<td id="grade">${grade.value?.label}</td>`)
+  htmlTemplate.value = htmlTemplate.value.replace('<td id="academic-year"></td>', `<td id="academic-year">${academicYear.value}</td>`)
   htmlTemplate.value = htmlTemplate.value.replace('<td id="total"></td>', `<td id="total">${reportSummary.total}</td>`)
   htmlTemplate.value = htmlTemplate.value.replace('<td id="hadir"></td>', `<td id="hadir">${reportSummary.hadir}</td>`)
   htmlTemplate.value = htmlTemplate.value.replace('<td id="sakit"></td>', `<td id="sakit">${reportSummary.sakit}</td>`)
@@ -190,6 +192,7 @@ const populateReports = async () => {
   reportSummary.alpa = 0
   await attendanceServices.getDailyAttendance(payload).then((result: AxiosResponse) => {
     const datas = result.data.data
+    academicYear.value = datas[0].academic_years[0].name
     for (const [index, item] of datas.entries()) {
       const hadir = item.attendances.filter((item: any) => item.status == 'H').length
       const izin = item.attendances.filter((item: any) => item.status == 'I').length
@@ -213,6 +216,7 @@ const populateReports = async () => {
     }
   }).catch((error) => {
     handleErrorResponse(error)
+    modal.closeModal()
   })
 }
 
