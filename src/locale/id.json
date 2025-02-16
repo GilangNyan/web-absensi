@@ -67,7 +67,8 @@
     "newPassword": "Kata Sandi Baru",
     "role": "Hak Akses",
     "downloadReports": "Unduh Laporan {type}",
-    "print": "Cetak"
+    "print": "Cetak",
+    "semester": "Semester"
   },
   "description": {
     "forgotPassword": "Masukkan alamat email terdaftar Anda dan kami akan mengirimkan tautan untuk mengubah kata sandi Anda.",

@@ -224,3 +224,14 @@ export const getTotalDaysByMonth = (year: number, month: number): number => {
 
   return dayDiff + 1
 }
+
+export const getTotalDaysByDateRange = (start: string, end: string): number => {
+  const startDate = new Date(start)
+  const endDate = new Date(end)
+  
+  const timeDiff = endDate.getTime() - startDate.getTime()
+
+  const dayDiff = Math.round(timeDiff / (1000 * 3600 * 24))
+
+  return dayDiff
+}

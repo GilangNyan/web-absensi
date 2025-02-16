@@ -67,7 +67,8 @@
     "newPassword": "New Password",
     "role": "Role",
     "downloadReports": "Download {type} Reports",
-    "print": "Print"
+    "print": "Print",
+    "semester": "Semester"
   },
   "description": {
     "forgotPassword": "Enter your registered email and we'll send you a link to reset your password.",

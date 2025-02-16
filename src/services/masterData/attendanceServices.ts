@@ -16,6 +16,11 @@ export default {
     config.params = data
     return axios.get('/attendance/monthly', config)
   },
+  getSemesterAttendance(data: unknown) {
+    const config = authHeader()
+    config.params = data
+    return axios.get('/attendance/semester', config)
+  },
   downloadDailyAttendance(data: unknown) {
     const config = authHeader()
     config.params = data
@@ -27,5 +32,11 @@ export default {
     config.params = data
     config.responseType = 'blob'
     return axios.get('/attendance/monthly/download', config)
+  },
+  downloadSemesterAttendance(data: unknown) {
+    const config = authHeader()
+    config.params = data
+    config.responseType = 'blob'
+    return axios.get('/attendance/semester/download', config)
   },
 }
