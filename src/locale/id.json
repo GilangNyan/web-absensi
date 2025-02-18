@@ -140,5 +140,9 @@
     "oldPasswordDoesntMatch": "Password lama tidak cocok"
   },
   "active": "Aktif",
-  "inactive": "Nonaktif"
+  "inactive": "Nonaktif",
+  "activeStudents": "Siswa Aktif",
+  "studentsAttended": "Siswa Hadir",
+  "studentsLate": "Siswa Terlambat",
+  "studentsNotAttended": "Siswa Tidak Hadir"
 }

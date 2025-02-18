@@ -140,5 +140,9 @@
     "oldPasswordDoesntMatch": "Old password doesn't match"
   },
   "active": "Active",
-  "inactive": "Inactive"
+  "inactive": "Inactive",
+  "activeStudents": "Active Students",
+  "studentsAttended": "Students Attended",
+  "studentsLate": "Students Late",
+  "studentsNotAttended": "Students Not Attended"
 }

@@ -4,7 +4,7 @@
     <div class="flex flex-col w-full" :class="{ 'pl-60': sidebarOpen }">
       <!-- <TopNavbar :value="sidebarOpen" @update="handleSidebarUpdate" /> -->
       <TitleBar :value="sidebarOpen" @update="handleSidebarUpdate" />
-      <div class="p-4 font-inter flex flex-col space-y-4">
+      <div class="p-4 font-inter flex flex-col space-y-4 relative min-h-[calc(100vh-4rem)]">
         <slot />
       </div>
     </div>
