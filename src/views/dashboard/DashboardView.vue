@@ -1,5 +1,5 @@
 <template>
-  <h3 class="text-2xl text-indigo-900 font-bold">Selamat Datang Admin Absensi SMAN 1 Beber</h3>
+  <h3 class="text-2xl text-indigo-900 font-bold">Selamat Datang, {{ userFullName }}!</h3>
   <div class="grid grid-cols-2 md:grid-cols-4 gap-2">
     <SummaryCard :title="t('activeStudents')" :value="cards.activeStudents">
       <UserGroupIcon class="w-1/3" />
@@ -14,7 +14,7 @@
       <XCircleIcon class="w-1/3 text-red-600" />
     </SummaryCard>
   </div>
-  <img class="absolute w-1/2 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" src="@/assets/images/dashboard-bg.png" alt="Background">
+  <img class="absolute w-1/2 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 opacity-40" src="@/assets/images/dashboard-bg.png" alt="Background">
 </template>
 
 <script setup lang="ts">
@@ -22,6 +22,7 @@ import SummaryCard from '@/components/cards/SummaryCard.vue';
 import gradeServices from '@/services/masterData/gradeServices';
 import dashboardServices from '@/services/menus/dashboardServices';
 import { useAuthStore } from '@/stores/auth';
+import { decodeJwt } from '@/utils/crypt';
 import { handleErrorResponse } from '@/utils/utilities';
 import { CheckBadgeIcon, ExclamationTriangleIcon, UserGroupIcon, XCircleIcon } from '@heroicons/vue/24/outline';
 import type { AxiosResponse } from 'axios';
@@ -33,6 +34,7 @@ const authStore = useAuthStore()
 
 const academicYear: Ref<any> = ref(null)
 const academicYearOptions: Ref<any[]> = ref([])
+const userFullName: Ref<string> = ref('')
 
 const cards = reactive({
   activeStudents: 0,
@@ -81,5 +83,8 @@ const getDashboardSummary = async () => {
 onMounted(() => {
   // getAcademicYears()
   getDashboardSummary()
+
+  const decoded = decodeJwt(authStore.token)
+  userFullName.value = decoded.employees[0].fullname
 })
 </script>
