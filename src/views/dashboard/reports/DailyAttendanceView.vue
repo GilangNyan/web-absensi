@@ -29,22 +29,31 @@
       </ButtonRoundedWithIcon>
     </div>
     <TableCustom :columns="columns" :rows="rows" hide-search>
-      <!--  -->
+      <template #cell(actions)="{value}">
+        <div class="flex items-center space-x-1 justify-center">
+          <ButtonDropdownActions hide-view hide-delete @action="handleClickActions($event, value)" />
+        </div>
+      </template>
     </TableCustom>
   </div>
 </template>
 
 <script setup lang="ts">
+import ButtonDropdownActions from '@/components/buttons/ButtonDropdownActions.vue';
 import ButtonRoundedWithIcon from '@/components/buttons/ButtonRoundedWithIcon.vue';
 import InputForm from '@/components/inputs/InputForm.vue';
 import SelectForm from '@/components/inputs/SelectForm.vue';
 import BreadCrumbs from '@/components/main/BreadCrumbs.vue';
 import TableCustom from '@/components/main/TableCustom.vue';
+import AttendanceFormModal from '@/components/modals/forms/AttendanceFormModal.vue';
 import PrintPreviewModal from '@/components/modals/PrintPreviewModal.vue';
 import attendanceServices from '@/services/masterData/attendanceServices';
 import gradeServices from '@/services/masterData/gradeServices';
+import { useAuthStore } from '@/stores/auth';
+import { useDataStore } from '@/stores/data';
 import { useModalStore } from '@/stores/modal';
 import type ISelectOption from '@/types/selectOption';
+import type TCrudStatus from '@/types/status';
 import { formatFullDate, handleErrorResponse } from '@/utils/utilities';
 import { DocumentArrowDownIcon, MagnifyingGlassIcon, PrinterIcon } from '@heroicons/vue/24/solid';
 import type { AxiosResponse } from 'axios';
@@ -55,6 +64,8 @@ import * as yup from 'yup';
 
 const { t } = useI18n()
 const modal = useModalStore()
+const authStore = useAuthStore()
+const dataStore = useDataStore()
 const isBusy: Ref<boolean> = ref(false)
 const isReportGenerated: Ref<boolean> = ref(false)
 const downloadXlsxLoading: Ref<boolean> = ref(false)
@@ -105,7 +116,11 @@ const columns: Ref = ref([
   {
     name: 'alpa',
     title: 'Alpa'
-  }
+  },
+  {
+    name: 'actions',
+    title: t('tableHead.actions')
+  },
 ])
 const rows: Ref = ref([])
 
@@ -149,7 +164,8 @@ const getData = async (): Promise<void> => {
         hadir: hadir ? '☑' : '☐',
         sakit: sakit ? '☑' : '☐',
         izin: izin ? '☑' : '☐',
-        alpa: alpa || (!hadir && !sakit && !izin) ? '☑' : '☐'
+        alpa: alpa || (!hadir && !sakit && !izin) ? '☑' : '☐',
+        actions: item
       }
       rows.value.push(entry)
     })
@@ -257,6 +273,22 @@ const downloadReports = async (fileType: string) => {
 const getCurrentDate = () => {
   const d = new Date().toISOString().slice(0, 10)
   date.value = d
+}
+
+const handleClickActions = (event: string, value: any) => {
+  if (event === 'update') {
+    triggerUpdateAttendanceModal('U', value)
+  }
+}
+
+const triggerUpdateAttendanceModal = (actions: TCrudStatus, data?: any) => {
+  dataStore.setStatus(actions)
+  const studentAttendance = data.attendances.find((item: any) => item.academicYearId == authStore.year.id)
+  const studentGrade = data.grades.find((item: any) => item.student_grade.academicYearId == authStore.year.id)
+  modal.openModal({ component: AttendanceFormModal, props: { id: data.id, name: data.fullname, nisn: data.nisn, date: date.value, grade: studentGrade.id, status: studentAttendance ? studentAttendance.status : 'A' } })
+  modal.onOk(() => {
+    getData()
+  })
 }
 
 onMounted(() => {

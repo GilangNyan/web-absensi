@@ -68,7 +68,9 @@
     "role": "Hak Akses",
     "downloadReports": "Unduh Laporan {type}",
     "print": "Cetak",
-    "semester": "Semester"
+    "semester": "Semester",
+    "attendance": "Kehadiran",
+    "attendanceStatus": "Status Kehadiran"
   },
   "description": {
     "forgotPassword": "Masukkan alamat email terdaftar Anda dan kami akan mengirimkan tautan untuk mengubah kata sandi Anda.",

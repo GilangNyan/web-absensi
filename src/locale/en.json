@@ -68,7 +68,9 @@
     "role": "Role",
     "downloadReports": "Download {type} Reports",
     "print": "Print",
-    "semester": "Semester"
+    "semester": "Semester",
+    "attendance": "Attendance",
+    "attendanceStatus": "Attendance Status"
   },
   "description": {
     "forgotPassword": "Enter your registered email and we'll send you a link to reset your password.",
