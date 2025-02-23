@@ -146,5 +146,7 @@
   "activeStudents": "Active Students",
   "studentsAttended": "Students Attended",
   "studentsLate": "Students Late",
-  "studentsNotAttended": "Students Not Attended"
+  "studentsNotAttended": "Students Not Attended",
+  "male": "Male",
+  "female": "Female"
 }

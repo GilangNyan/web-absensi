@@ -35,6 +35,7 @@ import UserFormModal from '@/components/modals/forms/UserFormModal.vue';
 import userServices from '@/services/users/userServices';
 import { useDataStore } from '@/stores/data';
 import { useModalStore } from '@/stores/modal';
+import { useToasterStore } from '@/stores/toaster';
 import type TCrudStatus from '@/types/status';
 import { charStatus, handleErrorResponse } from '@/utils/utilities';
 import { PlusIcon } from '@heroicons/vue/24/solid';
@@ -44,6 +45,7 @@ import { useI18n } from 'vue-i18n';
 const { t } = useI18n()
 const dataStore = useDataStore()
 const modalStore = useModalStore()
+const toastStore = useToasterStore()
 
 const columns: Ref = ref([
   {
@@ -87,6 +89,7 @@ const getData = async (): Promise<void> => {
     perPage: perPage.value,
     search: searchData.value
   }
+  rows.value = []
   await userServices.getUsers(req).then((result) => {
     totalPages.value = result.data.data.totalPages
     totalItems.value = result.data.data.totalItems
@@ -128,6 +131,9 @@ const search = (event: string): void => {
 const triggerUserFormModal = (actions: TCrudStatus, data?: any): void => {
   dataStore.setStatus(actions)
   modalStore.openModal({ component: UserFormModal, props: data })
+  modalStore.onOk(() => {
+    getData()
+  })
 }
 
 const handleClickActions = (event: string, value: any): void => {
@@ -138,6 +144,25 @@ const handleClickActions = (event: string, value: any): void => {
     dataStore.setStatus('D')
     confirmationDelete(value)
   }
+}
+
+const confirmationDelete = (data: any): void => {
+  modalStore.openConfirmationModal(t('label.confirm'), t('description.actionsConfirmation', { actions: t('label.delete').toLowerCase() }))
+  modalStore.onOk(() => {
+    deleteData(data)
+  })
+}
+
+const deleteData = async (data: any): Promise<void> => {
+  const payload = {
+    id: data.id
+  }
+  await userServices.deleteUser(payload).then((result) => {
+    toastStore.success({ text: t('success.success'), message: t('success.delete', { name: result.data.data.username })})
+    getData()
+  }).catch((error: unknown) => {
+    handleErrorResponse(error)
+  })
 }
 
 onMounted(() => {

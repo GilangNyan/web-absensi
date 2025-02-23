@@ -1,3 +1,4 @@
+import type TCrudStatus from "@/types/status"
 import { authHeader } from "@/utils/header"
 import axios from "axios"
 
@@ -7,13 +8,13 @@ export default {
     config.params = data
     return axios.get('/users', config)
   },
-  createUser(data: any) {
+  saveUser(data: any, crudStatus: TCrudStatus) {
     const config = authHeader()
-    return axios.post('/users', data, config)
-  },
-  updateUser(data: any) {
-    const config = authHeader()
-    return axios.put('/users', data, config)
+    if (crudStatus == 'I') {
+      return axios.post('/users', data, config)
+    } else {
+      return axios.put('/users', data, config)
+    }
   },
   deleteUser(data: any) {
     const config = authHeader()

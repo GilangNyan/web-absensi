@@ -146,5 +146,7 @@
   "activeStudents": "Siswa Aktif",
   "studentsAttended": "Siswa Hadir",
   "studentsLate": "Siswa Terlambat",
-  "studentsNotAttended": "Siswa Tidak Hadir"
+  "studentsNotAttended": "Siswa Tidak Hadir",
+  "male": "Laki-laki",
+  "female": "Perempuan"
 }
