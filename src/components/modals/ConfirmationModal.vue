@@ -14,7 +14,7 @@
       </button>
       <button
         class="bg-blue-500 px-4 py-2 text-white rounded w-1/2"
-        @click.prevent="modalStore.confirmAction"
+        @click.prevent="confirm"
       >
         {{ $t('label.confirm') }}
       </button>
@@ -34,4 +34,9 @@ interface Props {
 const props = defineProps<Props>()
 
 const modalStore = useModalStore()
+
+const confirm = () => {
+  modalStore.confirmAction()
+  modalStore.okClicked()
+}
 </script>
