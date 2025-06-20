@@ -23,5 +23,10 @@ export default {
   updateStudents(data: any) {
     const config = authHeader()
     return axios.put('/students', data, config)
+  },
+  deleteStudent(data: any) {
+    const config = authHeader()
+    config.data = data
+    return axios.delete('/students', config)
   }
 }

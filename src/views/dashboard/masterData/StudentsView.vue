@@ -47,11 +47,13 @@ import { useAuthStore } from '@/stores/auth';
 import StudentModal from '@/components/modals/forms/StudentModal.vue';
 import { useDataStore } from '@/stores/data';
 import type TCrudStatus from '@/types/status';
+import { useToasterStore } from '@/stores/toaster';
 
 const lang = useI18n()
 const modalStore = useModalStore()
 const authStore = useAuthStore()
 const dataStore = useDataStore()
+const toastStore = useToasterStore()
 
 const columns: Ref = ref([
   {
@@ -181,6 +183,22 @@ const handleClickActions = (event: string, value: any): void => {
 
 const confirmationDelete = (data: any): void => {
   modalStore.openConfirmationModal(lang.t('label.confirm'), lang.t('description.actionsConfirmation', { actions: lang.t('label.delete').toLowerCase() }))
+  modalStore.onOk(() => {
+    deleteData(data)
+  })
+}
+
+const deleteData = async (data: any): Promise<void> => {
+  const payload = {
+    id: data.id
+  }
+  await studentServices.deleteStudent(payload).then((result) => {
+    toastStore.success({ text: lang.t('success.success'), message: lang.t('success.delete', { name: result.data.data.fullname }) })
+    getData()
+  }).catch((error: unknown) => {
+    handleErrorResponse(error)
+    console.error(error)
+  })
 }
 
 const orderByColumns = (data: any): void => {
