@@ -3,29 +3,28 @@
     <h1 class="font-bold text-indigo-900 text-2xl">{{ $t('title.monthlyAttendance') }}</h1>
     <BreadCrumbs />
   </div>
-  <Form
-    class="bg-white p-4 rounded-lg flex flex-col space-y-2"
-    id="monthly-attendance-form"
-    :validation-schema="schema"
-    @submit="getData()"
-  >
+  <Form class="bg-white p-4 rounded-lg flex flex-col space-y-2" id="monthly-attendance-form" :validation-schema="schema"
+    @submit="getData()">
     <div class="grid grid-cols-3 gap-2">
       <SelectForm name="year" :label="$t('tableHead.academicYear')" v-model="year" :options="yearOptions" />
       <SelectForm name="month" :label="$t('label.month')" v-model="month" :options="monthOptions" />
       <SelectForm name="grade" :label="$t('tableHead.grade')" v-model="grade" :options="gradeOptions" />
     </div>
     <div class="flex items-center justify-end">
-      <ButtonRoundedWithIcon :label="$t('label.confirm')" type="submit" form="monthly-attendance-form" color="indigo" :loading="isBusy">
+      <ButtonRoundedWithIcon :label="$t('label.confirm')" type="submit" form="monthly-attendance-form" color="indigo"
+        :loading="isBusy">
         <MagnifyingGlassIcon class="w-5 h-5" />
       </ButtonRoundedWithIcon>
     </div>
   </Form>
   <div class="bg-white p-4 rounded-lg flex flex-col space-y-2" v-if="isReportGenerated">
     <div class="flex w-full justify-end items-center space-x-2">
-      <ButtonRoundedWithIcon color="indigo" type="button" :label="$t('label.print')" @click="generateReports()" :loading="downloadPdfLoading" :disabled="downloadPdfLoading">
+      <ButtonRoundedWithIcon color="indigo" type="button" :label="$t('label.print')" @click="generateReports()"
+        :loading="downloadPdfLoading" :disabled="downloadPdfLoading">
         <PrinterIcon class="w-5 h-5" />
       </ButtonRoundedWithIcon>
-      <ButtonRoundedWithIcon color="indigo" type="button" :label="$t('label.downloadReports')" @click="downloadReports()" :loading="downloadXlsxLoading" :disabled="downloadXlsxLoading">
+      <ButtonRoundedWithIcon color="indigo" type="button" :label="$t('label.downloadReports')"
+        @click="downloadReports()" :loading="downloadXlsxLoading" :disabled="downloadXlsxLoading">
         <DocumentArrowDownIcon class="w-5 h-5" />
       </ButtonRoundedWithIcon>
     </div>
@@ -209,7 +208,7 @@ const downloadReports = async () => {
     if (disposition && disposition.indexOf('attachment') !== -1) {
       let filenameRegex = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/;
       let matches = filenameRegex.exec(disposition);
-      if (matches != null && matches[1]) { 
+      if (matches != null && matches[1]) {
         filename = matches[1].replace(/['"]/g, '');
       }
     }
